@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import Link from 'next/link';
 import { Sun, Moon, Sparkles, FileText, Menu, X } from 'lucide-react';
 import { RESUME_DATA } from '@/data/resume';
 
@@ -19,12 +20,13 @@ export function Header({ onOpenChat }: HeaderProps) {
   }, []);
 
   const navLinks = [
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Leadership', href: '#leadership' },
-    { name: 'Research', href: '#publications' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Experience', href: '/#experience' },
+    { name: 'Projects', href: '/#projects' },
+    { name: 'Skills', href: '/#skills' },
+    { name: 'Leadership', href: '/#leadership' },
+    { name: 'Research', href: '/#publications' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Contact', href: '/#contact' },
   ];
 
   return (
@@ -32,12 +34,12 @@ export function Header({ onOpenChat }: HeaderProps) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         {/* Brand & Status Badge */}
         <div className="flex items-center gap-3 shrink-0">
-          <a
-            href="#"
+          <Link
+            href="/"
             className="font-bold text-base sm:text-lg tracking-tight text-zinc-900 dark:text-white hover:opacity-80 transition-opacity whitespace-nowrap"
           >
             {RESUME_DATA.personalInfo.name}
-          </a>
+          </Link>
 
           {/* Responsive Status Indicator */}
           <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
@@ -50,13 +52,17 @@ export function Header({ onOpenChat }: HeaderProps) {
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center space-x-5 text-sm font-medium">
           {navLinks.map(link => (
-            <a
+            <Link
               key={link.name}
               href={link.href}
-              className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors whitespace-nowrap"
+              className={`transition-colors whitespace-nowrap ${
+                link.name === 'Blog'
+                  ? 'text-emerald-600 dark:text-emerald-400 font-bold'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+              }`}
             >
               {link.name}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -114,14 +120,14 @@ export function Header({ onOpenChat }: HeaderProps) {
         <div className="lg:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#080808]/95 backdrop-blur-md px-4 py-4 space-y-3">
           <div className="grid grid-cols-2 gap-2 text-sm">
             {navLinks.map(link => (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className="px-3 py-2 rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white font-medium"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
 
