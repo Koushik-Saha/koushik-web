@@ -104,18 +104,7 @@ export function AIChatbotDrawer({ isOpen, onClose }: AIChatbotDrawerProps) {
 
   return (
     <>
-      {/* Floating Trigger Pill */}
-      {!isOpen && (
-        <motion.button
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          onClick={onClose} // triggers toggle open
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-black font-medium text-sm shadow-xl hover:scale-105 transition-transform border border-zinc-700 dark:border-zinc-300"
-        >
-          <Sparkles className="w-4 h-4 text-amber-300 dark:text-amber-600 animate-pulse" />
-          <span>Ask Koushik's AI</span>
-        </motion.button>
-      )}
+
 
       {/* Slide-over Chat Drawer */}
       <AnimatePresence>

@@ -10,6 +10,8 @@ import { LeadershipSection } from '@/components/LeadershipSection';
 import { PublicationsSection } from '@/components/PublicationsSection';
 import { ContactSection } from '@/components/ContactSection';
 import { AIChatbotDrawer } from '@/components/AIChatbotDrawer';
+import { CartoonBotAvatar } from '@/components/CartoonBotAvatar';
+import { VisitorTracker } from '@/components/VisitorTracker';
 import { RESUME_DATA } from '@/data/resume';
 import { FileText, ArrowUp } from 'lucide-react';
 
@@ -22,6 +24,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-[#080808] transition-colors duration-200">
+      {/* Visitor Telemetry Tracker */}
+      <VisitorTracker />
+
       {/* Top Header */}
       <Header onOpenChat={() => setIsChatOpen(true)} />
 
@@ -64,6 +69,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Floating Animated Cartoon Character Assistant */}
+      <CartoonBotAvatar onOpenChat={() => setIsChatOpen(true)} />
 
       {/* AI Assistant Floating Drawer */}
       <AIChatbotDrawer

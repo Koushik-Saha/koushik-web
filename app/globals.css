@@ -1,27 +1,27 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f4f4f5;
-    --bg-card: #ffffff;
-    --border-color: #e4e4e7;
-    --text-primary: #09090b;
-    --text-muted: #71717a;
-    --accent: #18181b;
-    --accent-glow: rgba(0, 0, 0, 0.05);
-  }
+@custom-variant dark (&:where(.dark, .dark *));
 
-  .dark {
-    --bg-primary: #080808;
-    --bg-secondary: #121212;
-    --bg-card: #0f0f11;
-    --border-color: #27272a;
-    --text-primary: #fafafa;
-    --text-muted: #a1a1aa;
-    --accent: #ffffff;
-    --accent-glow: rgba(255, 255, 255, 0.06);
-  }
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f4f4f5;
+  --bg-card: #ffffff;
+  --border-color: #e4e4e7;
+  --text-primary: #09090b;
+  --text-muted: #71717a;
+  --accent: #18181b;
+  --accent-glow: rgba(0, 0, 0, 0.05);
+}
+
+.dark, html.dark {
+  --bg-primary: #080808;
+  --bg-secondary: #121212;
+  --bg-card: #0f0f11;
+  --border-color: #27272a;
+  --text-primary: #fafafa;
+  --text-muted: #a1a1aa;
+  --accent: #ffffff;
+  --accent-glow: rgba(255, 255, 255, 0.06);
 }
 
 html {
@@ -32,7 +32,7 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 ::selection {
@@ -40,7 +40,7 @@ body {
   color: #ffffff;
 }
 
-.dark ::selection {
+.dark ::selection, html.dark ::selection {
   background-color: #ffffff;
   color: #000000;
 }
