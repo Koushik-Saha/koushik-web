@@ -55,7 +55,7 @@ export const RESUME_DATA = {
     email: "koushik.saha666@gmail.com",
     linkedin: "https://linkedin.com/in/koushiksaha20",
     website: "https://koushiksaha.dev",
-    github: "https://github.com",
+    github: "https://github.com/Koushik-Saha",
     resumePdf: "/Koushik-Saha.pdf",
     summary: "Over a million people use software I've built every month, most recently leading the Next.js, Node.js, and React/TypeScript platform behind a major energy company's customer experience and contributing $2M+ in annual revenue. 6+ years as a full-stack engineer, specializing in micro-frontend architecture and performance optimization, with recent work extending into AI-powered product development using Claude APIs. Maintainer of an open-source library trusted by 2+ companies.",
     stats: [
@@ -197,7 +197,7 @@ export const RESUME_DATA = {
       description: "React + TypeScript + Storybook open-source design system: Over 500 weekly downloads on npm, used by 12+ companies, compliant with WCAG 2.1.",
       metrics: ["500+ Weekly npm Downloads", "Used by 12+ Companies", "WCAG 2.1 AAA Compliant"],
       techStack: ["React", "TypeScript", "Storybook", "npm", "WCAG 2.1"],
-      githubUrl: "https://github.com",
+      githubUrl: "https://github.com/Koushik-Saha",
       featured: true
     },
     {
@@ -207,6 +207,7 @@ export const RESUME_DATA = {
       description: "Built a full-stack academic journal publishing platform (Next.js, TypeScript, PostgreSQL/Prisma) managing 12 journals with a custom 4-reviewer auto-publish workflow. Implement PWA support, authentication, and article submission.",
       metrics: ["12 Journals Managed", "4-Reviewer Auto Workflow", "PWA & Stripe"],
       techStack: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "PWA", "Stripe"],
+      githubUrl: "https://github.com/Koushik-Saha/koushik-web",
       featured: true
     },
     {
