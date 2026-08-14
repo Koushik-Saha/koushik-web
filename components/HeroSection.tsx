@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FileDown, Sparkles, Mail, MapPin, Award } from 'lucide-react';
+import { FileDown, Sparkles, Mail, MapPin, Award, Phone, Globe } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/Icons';
 import { RESUME_DATA } from '@/data/resume';
 
@@ -27,14 +27,19 @@ export function HeroSection({ onOpenChat }: HeroSectionProps) {
               {RESUME_DATA.personalInfo.location}
             </span>
             <span>•</span>
+            <span className="flex items-center gap-1">
+              <Phone className="w-3.5 h-3.5" />
+              {RESUME_DATA.personalInfo.phone}
+            </span>
+            <span>•</span>
             <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-sans font-medium">
               <Award className="w-3.5 h-3.5" />
-              AWS & GCP Certified Cloud Architect
+              AWS & GCP Certified Architect
             </span>
           </div>
 
           {/* Main Title */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white">
               {RESUME_DATA.personalInfo.name}
             </h1>
@@ -43,13 +48,16 @@ export function HeroSection({ onOpenChat }: HeroSectionProps) {
             </p>
           </div>
 
-          {/* Short Bio */}
-          <p className="text-base text-zinc-600 dark:text-zinc-400 max-w-3xl leading-relaxed">
-            Full-stack leader specializing in high-throughput frontend architectures (React 18, Next.js, Module Federation), microservices (Node.js, Go), and AI-native applications. Proven track record scaling platforms to <strong className="text-zinc-900 dark:text-white font-medium">1M+ MAU ($2M+ ARR)</strong>, cutting cloud costs by <strong className="text-zinc-900 dark:text-white font-medium">$180K/year</strong>, and publishing peer-reviewed research in AI genomics and emergency health response.
-          </p>
+          {/* Full Professional Summary */}
+          <div className="p-5 rounded-xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed max-w-4xl space-y-2">
+            <div className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              Professional Summary
+            </div>
+            <p>{RESUME_DATA.personalInfo.summary}</p>
+          </div>
 
           {/* Key Metrics Stats Banner */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 pb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 pb-2">
             {RESUME_DATA.personalInfo.stats.map((stat, idx) => (
               <div
                 key={idx}
@@ -74,7 +82,7 @@ export function HeroSection({ onOpenChat }: HeroSectionProps) {
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-black font-medium text-sm hover:opacity-90 transition-opacity shadow-sm"
             >
               <FileDown className="w-4 h-4" />
-              Download Resume PDF
+              Download Koushik-Saha.pdf
             </a>
 
             <button
@@ -103,6 +111,15 @@ export function HeroSection({ onOpenChat }: HeroSectionProps) {
                 aria-label="GitHub"
               >
                 <GithubIcon className="w-4 h-4" />
+              </a>
+              <a
+                href={RESUME_DATA.personalInfo.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                aria-label="Website"
+              >
+                <Globe className="w-4 h-4" />
               </a>
               <a
                 href={`mailto:${RESUME_DATA.personalInfo.email}`}

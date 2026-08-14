@@ -5,6 +5,8 @@ import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
 import { ExperienceSection } from '@/components/ExperienceSection';
 import { ProjectsSection } from '@/components/ProjectsSection';
+import { SkillsSection } from '@/components/SkillsSection';
+import { LeadershipSection } from '@/components/LeadershipSection';
 import { PublicationsSection } from '@/components/PublicationsSection';
 import { ContactSection } from '@/components/ContactSection';
 import { AIChatbotDrawer } from '@/components/AIChatbotDrawer';
@@ -28,6 +30,8 @@ export default function Home() {
         <HeroSection onOpenChat={() => setIsChatOpen(true)} />
         <ExperienceSection />
         <ProjectsSection />
+        <SkillsSection />
+        <LeadershipSection />
         <PublicationsSection />
         <ContactSection />
       </main>
@@ -47,7 +51,7 @@ export default function Home() {
               className="hover:text-zinc-900 dark:hover:text-white transition-colors flex items-center gap-1"
             >
               <FileText className="w-3.5 h-3.5" />
-              Resume PDF
+              Koushik-Saha.pdf
             </a>
 
             <button
