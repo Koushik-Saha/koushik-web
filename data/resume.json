@@ -1,0 +1,244 @@
+{
+  "personalInfo": {
+    "name": "Koushik Saha",
+    "title": "Senior Full-Stack Software Engineer",
+    "subheading": "Next.js • Node.js • React/TypeScript • Micro-frontends • Distributed Systems • AI (Claude API)",
+    "location": "Austin, TX",
+    "phone": "(747) 231-8876",
+    "status": "Available for Senior & Lead Full-Stack Software Engineer Roles",
+    "email": "koushik.saha666@gmail.com",
+    "linkedin": "https://linkedin.com/in/koushiksaha20",
+    "website": "https://koushiksaha.dev",
+    "github": "https://github.com/Koushik-Saha",
+    "resumePdf": "/Koushik-Saha.pdf",
+    "summary": "Over a million people use software I've built every month, most recently leading the Next.js, Node.js, and React/TypeScript platform behind a major energy company's customer experience and contributing $2M+ in annual revenue. 6+ years as a full-stack engineer, specializing in micro-frontend architecture and performance optimization, with recent work extending into AI-powered product development using Claude APIs. Maintainer of an open-source library trusted by 2+ companies.",
+    "stats": [
+      { "label": "Years Experience", "value": "7+" },
+      { "label": "Cloud Certifications", "value": "AWS & GCP" },
+      { "label": "Monthly Active Users", "value": "1M+" },
+      { "label": "Peer-Reviewed Papers", "value": "4 Research" }
+    ]
+  },
+  "skillsCategorized": [
+    {
+      "category": "Languages",
+      "skills": ["JavaScript (7 yrs)", "TypeScript (6 yrs)", "Python (3 yrs)", "PHP (6 yrs)", "SQL"]
+    },
+    {
+      "category": "Frontend Architecture",
+      "skills": ["React", "Next.js", "HTML5", "CSS3", "Responsive Design", "WCAG 2.1"]
+    },
+    {
+      "category": "State Management",
+      "skills": ["Redux Toolkit", "Jotai", "Zustand", "React Query", "TanStack Query", "Context API"]
+    },
+    {
+      "category": "Build & Tooling",
+      "skills": ["Webpack", "Vite", "Module Federation", "Storybook", "ESLint", "Prettier", "Lighthouse"]
+    },
+    {
+      "category": "Testing & QA",
+      "skills": ["Jest", "React Testing Library", "Playwright", "Cypress", "Performance Testing"]
+    },
+    {
+      "category": "UI Systems & Design",
+      "skills": ["Tailwind CSS", "shadcn/ui", "Radix UI", "CSS Modules", "Figma Handoff", "SVG Animation", "Ant Design"]
+    },
+    {
+      "category": "Backend & APIs",
+      "skills": ["Node.js", "Express.js", "GraphQL", "REST APIs", "OpenAPI", "PostgreSQL", "Redis", "Django", "Laravel"]
+    },
+    {
+      "category": "Databases & Storage",
+      "skills": ["PostgreSQL", "MongoDB", "MySQL", "Redis", "ElasticSearch"]
+    },
+    {
+      "category": "Cloud & DevOps",
+      "skills": ["AWS (S3, Lambda, CloudFront, EC2)", "Docker", "GitHub Actions", "CI/CD Pipeline Design"]
+    }
+  ],
+  "experience": [
+    {
+      "id": "freedom-shopping",
+      "role": "Lead Software Engineer",
+      "company": "Freedom Shopping LLC",
+      "period": "May 2025 – Present",
+      "location": "Remote / US",
+      "highlights": [
+        "Constructed IJAISM, a software-as-a-service platform for academic publishing (Next.js, React, Prisma, PostgreSQL) – from peer review automation and ORCID login to payment gateways (Stripe/PayPal) and a complete CI/CD pipeline.",
+        "Built multi-tenant platform for retail operations including rule-based anomaly detection, 2FA, automated payroll processing, and RBAC permissions management for multiple companies/stores.",
+        "Possesses end to end ownership of the stack - API development, third party integrations, CI/CD pipelines and production deployment - both as an enterprise engineer and a solo founder. Designed a full-stack real-time ASL translation service which involved the use of React, Next.js, Node.js and Python/Flask, Media Pipe hand tracking and WebRTC video chat integration.",
+        "Gesture recognition using computer vision and CI/CD pipeline including security scan (Trivy, CodeQL) via Docker and Kubernetes deployment."
+      ],
+      "skills": ["Next.js", "React", "Prisma", "PostgreSQL", "Python/Flask", "MediaPipe", "WebRTC", "Docker", "Kubernetes", "Stripe", "PayPal", "CodeQL", "Trivy"]
+    },
+    {
+      "id": "powerley",
+      "role": "Senior Full-Stack Software Engineer",
+      "company": "Powerley",
+      "period": "Jan 2023 – May 2025",
+      "location": "US",
+      "highlights": [
+        "Modernized the DTE Energy public facing frontend by building a React 18 + TypeScript PWA that scored 95+ in Lighthouse at 1M+ MAU and generated $2M+ ARR.",
+        "Picked Module Federation over a shared monorepo, allowing three separate teams to ship independently; reduced cloud costs 30% for annual savings of $180K.",
+        "Built Go backend services for real-time energy monitoring data pipeline in addition to Node.js, leveraging Go's concurrency paradigm to deal with high-throughput, low-latency feed ingestion.",
+        "Built a Storybook + TypeScript component library which saved 40% on UI development effort and made it possible to release 2 major versions a quarter; open-sourced library downloaded 500+ times a week by 12+ companies.",
+        "Optimized frontend bundle size by 28% via Webpack/Vite profiling, code splitting, and lazy loading; ensured full component implementation of WCAG 2.1 guidelines.",
+        "Built the GitHub Actions CI/CD pipeline from scratch, reducing release times from 45 to 8 minutes (82% improvement) while supporting daily deployments by 3 teams.",
+        "Created an A/B testing solution with Jotai instead of Redux due to constantly changing states of experiments; increased sprint testing capacity by 40% at 1M+ scale.",
+        "Mentored 8 engineers in 3 time zones; all got promoted in 18 months, while team velocity increased by 35% and retention was 95%."
+      ],
+      "skills": ["React 18", "TypeScript", "PWA", "Module Federation", "Go (Golang)", "Node.js", "Storybook", "Jotai", "Webpack", "Vite", "WCAG 2.1", "GitHub Actions"]
+    },
+    {
+      "id": "codemen",
+      "role": "Software Engineer",
+      "company": "Codemen Solutions Inc.",
+      "period": "May 2021 – Dec 2022",
+      "highlights": [
+        "Developed a JSON-based micro-frontend application that can fully define an entire website with a JSON payload and render it in React, which allows a single PM to deploy 1,000+ websites with no frontend engineer input at all.",
+        "Built a React SVG modifier library in the browser (Storybook) for our physical security design teams, helping close $500K+ worth of enterprise deals.",
+        "Built REST/GraphQL APIs (compatible with Open API spec) for 8 client-side applications processing 50K+ daily requests at 99.8% availability with p95 <120ms; reduced dB calls by 35% via Redis caching.",
+        "Created a Tailwind CSS & Radix UI component library which reduced cross-browser issues by 60%, avoiding one complete round of quality assurance testing per release.",
+        "Scalable Module Federation setup for 8 dev teams (from 2) saving $90K in annual costs."
+      ],
+      "skills": ["React", "TypeScript", "JSON Micro-frontends", "GraphQL", "REST APIs", "Redis Caching", "Tailwind CSS", "Radix UI", "Module Federation", "Storybook"]
+    },
+    {
+      "id": "moveon",
+      "role": "Junior Software Engineer",
+      "company": "MoveOn Cross-Border Trade",
+      "period": "Jul 2019 – May 2021",
+      "highlights": [
+        "Built the new checkout flow on mobile with React and Optimistic UI, improving conversion rate by 35%, increasing Lighthouse score from around 65 to 90+, and decreasing cart abandonment rate by 22%.",
+        "Scaled Laravel-based REST API by 3X, reducing response time by 20% and increasing throughput by 30% without any downtime.",
+        "Mobile checkout process re-designed for the two biggest B2C e-commerce sites in Bangladesh — increase in conversions by 35% and drop-in cart abandonment rate by 22%.",
+        "Architecture of Laravel product search API optimized to decrease the response time by 20% — no down-time during Black Friday traffic surges.",
+        "PWA deployed using the same codebase for web and mobile with more than 90% Lighthouse score — made it possible to deploy to three channels with one effort."
+      ],
+      "skills": ["React", "Optimistic UI", "Laravel", "PHP", "REST APIs", "PWA", "MySQL"]
+    },
+    {
+      "id": "bd-soft",
+      "role": "Junior Software Engineer",
+      "company": "BD SOFT IT",
+      "period": "Jun 2018 – Jul 2019",
+      "highlights": [
+        "Conceived and implemented a JavaScript library with reusable components, used in 4 internal projects and saving time by 30% in development.",
+        "Made an interface between front-end and Laravel REST APIs for several client-side modules, managing both the request and response cycles.",
+        "Created 3 web apps using production-level code that saved time during developer onboarding period."
+      ],
+      "skills": ["JavaScript (ES6+)", "HTML5/CSS3", "Laravel APIs", "Reusable Components"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "mindreframe",
+      "title": "MindReframe",
+      "subtitle": "AI-Native PWA",
+      "description": "An AI-native PWA, constructed entirely from scratch: Claude API, React, TypeScript, Next.js, multi-turn prompt chains, LLM guardrails.",
+      "metrics": ["Claude API", "Multi-turn Prompt Chains", "LLM Guardrails", "PWA"],
+      "techStack": ["Claude API", "React", "TypeScript", "Next.js", "LLM Guardrails"],
+      "githubUrl": "https://github.com/Koushik-Saha",
+      "featured": true
+    },
+    {
+      "id": "codemen-ui",
+      "title": "@codemen/groundfloor-react-ui",
+      "subtitle": "Open-Source React + TypeScript Design System",
+      "description": "React + TypeScript + Storybook open-source design system: Over 500 weekly downloads on npm, used by 12+ companies, compliant with WCAG 2.1.",
+      "metrics": ["500+ Weekly npm Downloads", "Used by 12+ Companies", "WCAG 2.1 AAA Compliant"],
+      "techStack": ["React", "TypeScript", "Storybook", "npm", "WCAG 2.1"],
+      "githubUrl": "https://github.com/Koushik-Saha",
+      "featured": true
+    },
+    {
+      "id": "ijaism",
+      "title": "IJAISM",
+      "subtitle": "SaaS Academic Journal Publishing Platform",
+      "description": "Built a full-stack academic journal publishing platform (Next.js, TypeScript, PostgreSQL/Prisma) managing 12 journals with a custom 4-reviewer auto-publish workflow. Implement PWA support, authentication, and article submission.",
+      "metrics": ["12 Journals Managed", "4-Reviewer Auto Workflow", "PWA & Stripe"],
+      "techStack": ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "PWA", "Stripe"],
+      "githubUrl": "https://github.com/Koushik-Saha/koushik-web",
+      "featured": true
+    },
+    {
+      "id": "fixup-report",
+      "title": "FixUp LLC Report",
+      "subtitle": "Multi-Tenant Retail Management Platform",
+      "description": "Built a multi-tenant retail management platform (Next.js, TypeScript, PostgreSQL/Prisma) covering daily/monthly sales reporting, inventory, payroll, tax exports, and reconciliation. Added time tracking, anomaly detection, 2FA security, and role-based permissions across 20+ operational modules.",
+      "metrics": ["20+ Operational Modules", "Anomaly Detection", "2FA & RBAC"],
+      "techStack": ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "2FA Security"],
+      "githubUrl": "https://github.com/Koushik-Saha",
+      "featured": true
+    }
+  ],
+  "education": [
+    {
+      "degree": "MS, Engineering Management",
+      "institution": "Westcliff University",
+      "location": "Irvine, CA",
+      "period": "August 2026",
+      "gpa": "GPA: 3.91 / 4.0"
+    },
+    {
+      "degree": "BSc, Computer Science & Engineering",
+      "institution": "North South University",
+      "location": "Dhaka, Bangladesh",
+      "period": "May 2019"
+    }
+  ],
+  "certifications": [
+    { "name": "AWS Certified Solutions Architect – Associate", "issuer": "Amazon Web Services", "year": "2025" },
+    { "name": "Professional Cloud Architect", "issuer": "Google Cloud", "year": "2024" }
+  ],
+  "publications": [
+    {
+      "id": "pub-1",
+      "title": "Artificial Intelligence Applications for Hospital Resource Allocation in Emergency Preparedness",
+      "journal": "Advances in Public Health",
+      "year": "2026",
+      "status": "Published",
+      "doi": "10.1155/adph/7200757"
+    },
+    {
+      "id": "pub-2",
+      "title": "Big Data in Cancer Genomics: Computational Foundations and Emerging Pathways for Precision Oncology",
+      "journal": "Computational and Systems Oncology",
+      "year": "2026",
+      "status": "Accepted",
+      "doi": "10.1002/cso2.70020"
+    },
+    {
+      "id": "pub-3",
+      "title": "AI-Powered Predictive Analytics in Cancer Prevention Policy: A Systematic Review",
+      "journal": "Health Science Reports",
+      "year": "2026",
+      "status": "Under Review"
+    },
+    {
+      "id": "pub-4",
+      "title": "Integrating Artificial Intelligence with a Global Atlas of Human Genetic Variation: Implications for Precision Medicine",
+      "journal": "Journal of Multidisciplinary Healthcare",
+      "year": "2026",
+      "status": "Under Review"
+    }
+  ],
+  "leadership": [
+    {
+      "id": "lead-1",
+      "title": "React Design System Maintainer",
+      "description": "The single maintainer of an open source React + TypeScript UI library with more than 500 weekly downloads through npm by 2+ organizations; responsible for managing GitHub issues, handling community PRs, semantic versioning, and changelog."
+    },
+    {
+      "id": "lead-2",
+      "title": "Large-Scale Engineering Standards",
+      "description": "Created React components and storybook-based engineering standards at Powerley for all 3+ products; reduced engineer onboarding time from 3 weeks to less than 1 week without any accessibility regression post implementation."
+    },
+    {
+      "id": "lead-3",
+      "title": "Cross-Zone Time Engineering Mentoring",
+      "description": "Mentored 8 engineers in US, South Asia, and Europe; 100% got promoted to mid-level within 18 months, 35% increase in team velocity, 95% retention rate."
+    }
+  ]
+}
