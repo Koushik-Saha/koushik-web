@@ -45,7 +45,7 @@ export default function Home() {
       <footer className="py-12 border-t border-zinc-200 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-900/20 text-xs text-zinc-500 dark:text-zinc-400">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            © {new Date().getFullYear()} {RESUME_DATA.personalInfo.name}. Built with Next.js, Tailwind CSS, & Anthropic Claude API.
+            © {new Date().getFullYear()} {RESUME_DATA.personalInfo.name}
           </div>
 
           <div className="flex items-center space-x-4">

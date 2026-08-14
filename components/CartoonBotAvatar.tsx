@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, X, MessageSquare, ArrowRight, UserCheck } from 'lucide-react';
+import Image from 'next/image';
 
 interface CartoonBotAvatarProps {
   onOpenChat: () => void;
@@ -11,7 +12,7 @@ interface CartoonBotAvatarProps {
 export function CartoonBotAvatar({ onOpenChat }: CartoonBotAvatarProps) {
   const [showSpeechBubble, setShowSpeechBubble] = useState(false);
   const [speechText, setSpeechText] = useState(
-    "Hi there! 👋 I'm Koushik's AI Assistant. Ask me anything about his 7+ yrs Full-Stack engineering background, $2M ARR PWA, or AI research!"
+    "Hi there! 👋 I'm Koushik's AI Assistant. Ask me anything about his 7+ yrs Full-Stack experience, $2M ARR PWA, or AI research!"
   );
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export function CartoonBotAvatar({ onOpenChat }: CartoonBotAvatarProps) {
 
   const handleQuickIntro = () => {
     setSpeechText(
-      "Koushik Saha is a Senior Full-Stack Engineer & Cloud Architect (AWS/GCP). He has scaled platforms to 1M+ MAU, saved $180K/yr with Module Federation, and published 4 research papers!"
+      "Koushik Saha is a Senior Full-Stack Engineer & Cloud Architect (AWS/GCP). He scaled DTE Energy's PWA to 1M+ MAU, saved $180K/yr with Module Federation, and published 4 research papers!"
     );
   };
 
@@ -89,7 +90,7 @@ export function CartoonBotAvatar({ onOpenChat }: CartoonBotAvatarProps) {
         )}
       </AnimatePresence>
 
-      {/* Floating Animated Cartoon Robot Character Button */}
+      {/* Floating Animated 3D Pixar-Style Cartoon Character Button */}
       <motion.button
         onClick={() => {
           if (showSpeechBubble) {
@@ -109,61 +110,26 @@ export function CartoonBotAvatar({ onOpenChat }: CartoonBotAvatarProps) {
             ease: 'easeInOut'
           }
         }}
-        className="pointer-events-auto relative group flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 shadow-xl border-2 border-white dark:border-zinc-800 focus:outline-none"
-        title="Click to talk with Koushik's AI Cartoon Bot!"
+        className="pointer-events-auto relative group flex items-center justify-center w-16 h-16 rounded-full bg-zinc-900 dark:bg-white shadow-2xl border-2 border-emerald-500 focus:outline-none overflow-hidden p-0.5"
+        title="Click to talk with Koushik's AI Cartoon Avatar!"
       >
-        {/* Glowing pulse ring */}
+        {/* Glowing ring */}
         <span className="absolute -inset-1 rounded-full bg-emerald-500/30 animate-ping pointer-events-none opacity-75" />
 
-        {/* SVG Cartoon Robot Face */}
-        <svg
-          viewBox="0 0 64 64"
-          className="w-9 h-9 text-white drop-shadow-md"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Antenna */}
-          <line x1="32" y1="6" x2="32" y2="16" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-          <circle cx="32" cy="5" r="3" fill="#FBBF24" className="animate-pulse" />
-
-          {/* Robot Head Outer */}
-          <rect x="12" y="16" width="40" height="34" rx="10" fill="#1E293B" stroke="currentColor" strokeWidth="2.5" />
-
-          {/* Screen Face Glass */}
-          <rect x="18" y="22" width="28" height="20" rx="6" fill="#0F172A" />
-
-          {/* Blinking Cute Robot Eyes */}
-          <motion.circle
-            cx="26"
-            cy="31"
-            r="3.5"
-            fill="#34D399"
-            animate={{ scaleY: [1, 0.1, 1] }}
-            transition={{ repeat: Infinity, duration: 4, repeatDelay: 2 }}
+        {/* 3D Pixar Cartoon Character Image */}
+        <div className="relative w-full h-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-900 flex items-center justify-center">
+          <Image
+            src="/avatar.png"
+            alt="Koushik Cartoon Character"
+            width={64}
+            height={64}
+            className="object-cover w-full h-full transform scale-110"
+            priority
           />
-          <motion.circle
-            cx="38"
-            cy="31"
-            r="3.5"
-            fill="#34D399"
-            animate={{ scaleY: [1, 0.1, 1] }}
-            transition={{ repeat: Infinity, duration: 4, repeatDelay: 2 }}
-          />
+        </div>
 
-          {/* Friendly Smiling Mouth Arc */}
-          <path d="M26 37C28 39.5 36 39.5 38 37" stroke="#34D399" strokeWidth="2.5" strokeLinecap="round" />
-
-          {/* Cute Blush Cheek Dots */}
-          <circle cx="21" cy="35" r="1.5" fill="#F472B6" opacity="0.8" />
-          <circle cx="43" cy="35" r="1.5" fill="#F472B6" opacity="0.8" />
-
-          {/* Ear Bolts */}
-          <rect x="8" y="28" width="4" height="10" rx="2" fill="#64748B" />
-          <rect x="52" y="28" width="4" height="10" rx="2" fill="#64748B" />
-        </svg>
-
-        {/* Sparkle Badge Icon */}
-        <span className="absolute -top-1 -right-1 p-1 rounded-full bg-amber-400 text-black shadow">
+        {/* Sparkle Badge */}
+        <span className="absolute bottom-0 right-0 p-1 rounded-full bg-emerald-500 text-white shadow-md border border-white dark:border-zinc-900">
           <Sparkles className="w-3 h-3" />
         </span>
       </motion.button>
