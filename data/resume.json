@@ -182,6 +182,12 @@
       "gpa": "GPA: 3.91 / 4.0"
     },
     {
+      "degree": "MS, Engineering Management",
+      "institution": "California State University, Northridge",
+      "location": "Northridge, CA",
+      "period": "January 2025"
+    },
+    {
       "degree": "BSc, Computer Science & Engineering",
       "institution": "North South University",
       "location": "Dhaka, Bangladesh",
@@ -190,7 +196,8 @@
   ],
   "certifications": [
     { "name": "AWS Certified Solutions Architect – Associate", "issuer": "Amazon Web Services", "year": "2025" },
-    { "name": "Professional Cloud Architect", "issuer": "Google Cloud", "year": "2024" }
+    { "name": "Professional Cloud Architect", "issuer": "Google Cloud", "year": "2024" },
+    { "name": "AWS Educate Introduction to Cloud 101", "issuer": "Amazon Web Services", "year": "2023" }
   ],
   "publications": [
     {
