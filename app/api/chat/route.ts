@@ -1,8 +1,21 @@
 import { NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { AI_SYSTEM_PROMPT } from '@/data/ai-context';
+import { prisma } from '@/lib/prisma';
 
 export const runtime = 'nodejs';
+
+// Cache extractor instance in memory
+let extractor: any = null;
+
+async function getEmbedding(text: string): Promise<number[]> {
+  if (!extractor) {
+    const { pipeline } = await import('@xenova/transformers');
+    extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+  }
+  const output = await extractor(text, { pooling: 'mean', normalize: true });
+  return Array.from(output.data);
+}
 
 // List of candidate models for forward & backward compatibility
 const PREFERRED_MODELS = [
@@ -23,20 +36,36 @@ export async function POST(req: Request) {
       );
     }
 
+    const lastUserMessage = messages[messages.length - 1]?.content || '';
+
+    // 1. Perform Semantic Search
+    let context = '';
+    try {
+      const embedding = await getEmbedding(lastUserMessage);
+      const embeddingStr = `[${embedding.join(',')}]`;
+
+      const matches: any[] = await prisma.$queryRawUnsafe(`
+        SELECT content, 1 - (embedding <=> $1::vector) AS similarity
+        FROM "DocumentChunk"
+        ORDER BY embedding <=> $1::vector
+        LIMIT 4
+      `, embeddingStr);
+
+      context = matches.map(m => m.content).join('\n\n');
+    } catch (embedErr) {
+      console.error('Semantic search failed:', embedErr);
+    }
+
     const apiKey = process.env.ANTHROPIC_API_KEY;
 
     // Fallback preview mode if API key is not configured
     if (!apiKey) {
-      const lastUserMessage = messages[messages.length - 1]?.content || '';
       let mockReply = "Hello! I am Koushik's AI ambassador. Ask me anything about his 7+ years of Full-Stack experience, React 18 / Next.js PWA architecture, $180K/yr cloud savings with Module Federation, AWS/GCP Architect certifications, or research papers!";
 
-      const lower = lastUserMessage.toLowerCase();
-      if (lower.includes('tech') || lower.includes('stack') || lower.includes('skill')) {
-        mockReply = "Koushik's core tech stack includes React 18/19, Next.js (App Router), TypeScript, Tailwind CSS, Node.js, Go (Golang), Python, PostgreSQL, Prisma, Redis, AWS (S3, Lambda, EC2), Docker, Kubernetes, and Claude API / OpenAI integrations.";
-      } else if (lower.includes('experience') || lower.includes('company') || lower.includes('work')) {
-        mockReply = "Koushik is currently Lead Software Engineer at Freedom Shopping LLC (building IJAISM academic SaaS and FixUp multi-tenant retail platform). Previously, he was Senior Full-Stack Engineer at Powerley, modernizing DTE Energy's PWA to 1M+ MAU ($2M+ ARR) and saving $180K/yr via Module Federation.";
-      } else if (lower.includes('pub') || lower.includes('paper') || lower.includes('research')) {
-        mockReply = "Koushik has published 4 research papers in peer-reviewed journals including 'Advances in Public Health' (2026) on AI hospital resource allocation and 'Computational and Systems Oncology' (2026) on Cancer Genomics.";
+      // If we got matching semantic chunks, show the top match for a rich demo experience!
+      if (context) {
+        const topChunk = context.split('\n\n')[0] || '';
+        mockReply = `🤖 [AI Ambassador Demo Mode - RAG Results]:\n\nBased on your query, here is relevant information from Koushik's indexed profile:\n\n${topChunk}\n\n(Set ANTHROPIC_API_KEY in .env.local to enable full Claude conversational synthesis).`;
       }
 
       return NextResponse.json({ role: 'assistant', content: mockReply });
@@ -50,6 +79,14 @@ export async function POST(req: Request) {
       content: m.content
     }));
 
+    // Synthesize the system prompt with matching RAG context
+    const enrichedSystemPrompt = `
+      ${AI_SYSTEM_PROMPT}
+
+      VERIFIED PORTFOLIO DATA CONTEXT (Use this to answer the user's question accurately):
+      ${context}
+    `;
+
     let assistantText = '';
     let lastError: unknown = null;
 
@@ -59,7 +96,7 @@ export async function POST(req: Request) {
         const response = await anthropic.messages.create({
           model,
           max_tokens: 500,
-          system: AI_SYSTEM_PROMPT,
+          system: enrichedSystemPrompt,
           messages: formattedMessages
         });
 

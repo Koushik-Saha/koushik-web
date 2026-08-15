@@ -1,0 +1,37 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Session {
+  id               String           @id @default(uuid())
+  ip               String
+  location         String
+  screenResolution String
+  language         String
+  userAgent        String
+  createdAt        DateTime         @default(now())
+  events           AnalyticsEvent[]
+}
+
+model AnalyticsEvent {
+  id          String   @id @default(uuid())
+  sessionId   String
+  session     Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  type        String   // "visit" | "click"
+  pageUrl     String
+  clickTarget String?
+  createdAt   DateTime @default(now())
+}
+
+model DocumentChunk {
+  id        String   @id @default(uuid())
+  source    String   // "blog" | "resume"
+  content   String
+  embedding Unsupported("vector(384)")?
+  createdAt DateTime @default(now())
+}
