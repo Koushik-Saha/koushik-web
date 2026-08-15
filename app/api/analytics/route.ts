@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { Resend } from 'resend';
 import { prisma } from '@/lib/prisma';
 
 export const runtime = 'nodejs';
@@ -106,17 +105,15 @@ export async function POST(req: Request) {
     console.log(`User Agent: ${userAgent}`);
     console.log('------------------------------------');
 
-    const apiKey = process.env.RESEND_API_KEY;
+    const mailtrapToken = process.env.MAILTRAP_TOKEN;
 
-    if (!apiKey) {
+    if (!mailtrapToken) {
       return NextResponse.json({
         success: true,
         mode: 'preview',
-        message: 'Visitor telemetry logged. Set RESEND_API_KEY to receive instant email notifications.'
+        message: 'Visitor telemetry logged. Set MAILTRAP_TOKEN to receive instant email notifications.'
       });
     }
-
-    const resend = new Resend(apiKey);
 
     const emailSubject = `🚨 New Portfolio Visitor from ${location !== 'Unknown Location' ? location : 'Direct Link'}!`;
 
@@ -131,12 +128,28 @@ export async function POST(req: Request) {
       `• Preferred Language: ${language || 'en-US'}\n\n` +
       `--- Sent automatically by your Next.js Portfolio Visitor Analytics Tracker.`;
 
-    await resend.emails.send({
-      from: 'Portfolio Analytics <onboarding@resend.dev>',
-      to: [NOTIFICATION_EMAIL],
-      subject: emailSubject,
-      text: emailText
-    });
+    try {
+      const mailtrapRes = await fetch("https://send.api.mailtrap.io/api/send", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${mailtrapToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          from: { email: "analytics@koushiksaha.dev", name: "Portfolio Analytics" },
+          to: [{ email: NOTIFICATION_EMAIL }],
+          subject: emailSubject,
+          text: emailText
+        })
+      });
+
+      if (!mailtrapRes.ok) {
+        const errText = await mailtrapRes.text();
+        console.error('Mailtrap Analytics email sending failed:', errText);
+      }
+    } catch (mailtrapErr) {
+      console.error('Mailtrap Analytics email network error:', mailtrapErr);
+    }
 
     return NextResponse.json({ success: true });
   } catch (err: unknown) {

@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
 
 export const runtime = 'nodejs';
 
@@ -16,9 +15,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const apiKey = process.env.RESEND_API_KEY;
+    const mailtrapToken = process.env.MAILTRAP_TOKEN;
 
-    if (!apiKey) {
+    if (!mailtrapToken) {
       console.log('--- [CONTACT FORM MESSAGE RECEIVED] ---');
       console.log(`To: ${DESTINATION_EMAIL}`);
       console.log(`From Visitor: ${name} <${email}>`);
@@ -28,21 +27,31 @@ export async function POST(req: Request) {
 
       return NextResponse.json({
         success: true,
-        message: 'Message received! (Demo mode: RESEND_API_KEY environment variable is not set yet).'
+        message: 'Message received! (Demo mode: MAILTRAP_TOKEN environment variable is not set yet).'
       });
     }
 
-    const resend = new Resend(apiKey);
-
-    const data = await resend.emails.send({
-      from: 'Portfolio Contact Form <onboarding@resend.dev>',
-      to: [DESTINATION_EMAIL],
-      replyTo: email,
-      subject: `[Portfolio Inquiry] ${subject || 'New Message'} from ${name}`,
-      text: `You received a new message from your portfolio website:\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || 'None'}\n\nMessage:\n${message}\n\n--- You can reply directly to this email to respond to ${email}.`,
+    const mailtrapRes = await fetch("https://send.api.mailtrap.io/api/send", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${mailtrapToken}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from: { email: "contact@koushiksaha.dev", name: "Portfolio Contact Form" },
+        to: [{ email: DESTINATION_EMAIL }],
+        reply_to: { email: email, name: name },
+        subject: `[Portfolio Inquiry] ${subject || 'New Message'} from ${name}`,
+        text: `You received a new message from your portfolio website:\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || 'None'}\n\nMessage:\n${message}\n\n--- You can reply directly to this email to respond to ${email}.`,
+      })
     });
 
-    return NextResponse.json({ success: true, data });
+    if (!mailtrapRes.ok) {
+      const errText = await mailtrapRes.text();
+      throw new Error(`Mailtrap API returned error: ${errText}`);
+    }
+
+    return NextResponse.json({ success: true });
   } catch (err: unknown) {
     console.error('Contact API Error:', err);
     return NextResponse.json(
