@@ -5,15 +5,26 @@ import { Shield, Eye, Monitor, MapPin, Calendar, ExternalLink } from 'lucide-rea
 export const revalidate = 0; // Disable server component caching to ensure live logs
 
 interface PageProps {
-  searchParams: Promise<{ token?: string }>;
+  searchParams: Promise<{ token?: string; page?: string }>;
 }
 
 export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const token = params.token;
+  const page = parseInt(params.page || '1', 10);
+  const pageSize = 10;
+  const skip = (page - 1) * pageSize;
   
   // Use 'Koushik1995!' as default if ADMIN_TOKEN env variable is missing
   const adminToken = process.env.ADMIN_TOKEN || 'Koushik1995!';
+
+  const formatLocation = (loc: string) => {
+    try {
+      return decodeURIComponent(loc);
+    } catch {
+      return loc;
+    }
+  };
 
   if (token !== adminToken) {
     return (
@@ -48,10 +59,13 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
     prisma.analyticsEvent.count({ where: { type: 'click' } })
   ]);
 
-  // 2. Fetch recent sessions and their event histories
+  const totalPages = Math.ceil(totalSessions / pageSize);
+
+  // 2. Fetch recent sessions and their event histories (paginated)
   const sessions = await prisma.session.findMany({
     orderBy: { createdAt: 'desc' },
-    take: 30,
+    skip,
+    take: pageSize,
     include: {
       events: {
         orderBy: { createdAt: 'asc' }
@@ -173,7 +187,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
                           <span>{session.ip}</span>
                           <span className="text-xs font-normal text-zinc-400 px-2 py-0.5 rounded bg-zinc-800 flex items-center gap-1">
                             <MapPin className="w-3.5 h-3.5 text-zinc-500" />
-                            {session.location}
+                            {formatLocation(session.location)}
                           </span>
                         </div>
                         <span className="text-xs text-zinc-500 flex items-center gap-1">
@@ -216,6 +230,48 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
                       </div>
                     </div>
                   ))
+                )}
+              </div>
+
+              {/* Pagination controls */}
+              <div className="flex flex-col sm:flex-row items-center justify-between border-t border-zinc-800/80 pt-4 mt-6 gap-4 text-xs">
+                <div className="text-zinc-500 font-medium">
+                  Showing <span className="font-semibold text-zinc-300">{totalSessions === 0 ? 0 : skip + 1}</span> to{' '}
+                  <span className="font-semibold text-zinc-300">
+                    {Math.min(skip + pageSize, totalSessions)}
+                  </span>{' '}
+                  of <span className="font-semibold text-zinc-300">{totalSessions}</span> sessions
+                </div>
+                {totalPages > 1 && (
+                  <div className="flex gap-2">
+                    {page > 1 ? (
+                      <a
+                        href={`/admin/analytics?token=${token}&page=${page - 1}`}
+                        className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-all duration-200"
+                      >
+                        Previous
+                      </a>
+                    ) : (
+                      <span className="px-3 py-1.5 bg-zinc-900/20 border border-zinc-800/50 rounded font-semibold text-zinc-600 cursor-not-allowed">
+                        Previous
+                      </span>
+                    )}
+                    <span className="px-3 py-1.5 text-zinc-500 self-center">
+                      Page {page} of {totalPages}
+                    </span>
+                    {page < totalPages ? (
+                      <a
+                        href={`/admin/analytics?token=${token}&page=${page + 1}`}
+                        className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-all duration-200"
+                      >
+                        Next
+                      </a>
+                    ) : (
+                      <span className="px-3 py-1.5 bg-zinc-900/20 border border-zinc-800/50 rounded font-semibold text-zinc-600 cursor-not-allowed">
+                        Next
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
             </div>

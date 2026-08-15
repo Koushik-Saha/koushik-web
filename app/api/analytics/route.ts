@@ -28,9 +28,18 @@ export async function POST(req: Request) {
       ip = clientIp || ip || 'Unknown IP';
     }
 
+    const decodeHeader = (val: string | null) => {
+      if (!val) return '';
+      try {
+        return decodeURIComponent(val);
+      } catch {
+        return val;
+      }
+    };
+
     const userAgent = req.headers.get('user-agent') || clientUA || 'Unknown Browser';
-    const city = req.headers.get('x-vercel-ip-city') || req.headers.get('cf-ipcity') || clientCity || '';
-    const country = req.headers.get('x-vercel-ip-country') || req.headers.get('cf-ipcountry') || clientCountry || '';
+    const city = decodeHeader(req.headers.get('x-vercel-ip-city') || req.headers.get('cf-ipcity')) || clientCity || '';
+    const country = decodeHeader(req.headers.get('x-vercel-ip-country') || req.headers.get('cf-ipcountry')) || clientCountry || '';
     const location = [city, country].filter(Boolean).join(', ') || 'Unknown Location';
 
     const timestamp = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
