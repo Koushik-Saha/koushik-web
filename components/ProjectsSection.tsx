@@ -6,6 +6,94 @@ import { Layers, ExternalLink, Sparkles } from 'lucide-react';
 import { GithubIcon } from '@/components/Icons';
 import { RESUME_DATA } from '@/data/resume';
 
+function ProjectArchitecture({ id }: { id: string }) {
+  if (id === 'mindreframe') {
+    return (
+      <div className="mt-4 p-3 bg-zinc-100 dark:bg-zinc-950/60 border border-zinc-200/50 dark:border-zinc-800/60 rounded-lg space-y-2">
+        <p className="text-[10px] uppercase font-mono tracking-wider font-bold text-zinc-500">System Architecture</p>
+        <div className="flex items-center justify-between gap-1 text-[11px] font-mono">
+          <div className="px-2 py-1 rounded bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 text-center flex-1">
+            Client PWA
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 text-center flex-1" title="Avoids RAG search latency">
+            In-Memory Prompt
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 text-center flex-1">
+            Claude API
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (id === 'codemen-ui') {
+    return (
+      <div className="mt-4 p-3 bg-zinc-100 dark:bg-zinc-950/60 border border-zinc-200/50 dark:border-zinc-800/60 rounded-lg space-y-2">
+        <p className="text-[10px] uppercase font-mono tracking-wider font-bold text-zinc-500">CI/CD & Delivery Flow</p>
+        <div className="flex items-center justify-between gap-1 text-[11px] font-mono">
+          <div className="px-2 py-1 rounded bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 text-center flex-1">
+            Storybook UI
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 text-center flex-1">
+            WCAG A11y Audit
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-orange-500/10 text-orange-700 dark:text-orange-300 border border-orange-500/20 text-center flex-1">
+            npm Registry
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (id === 'ijaism') {
+    return (
+      <div className="mt-4 p-3 bg-zinc-100 dark:bg-zinc-950/60 border border-zinc-200/50 dark:border-zinc-800/60 rounded-lg space-y-2">
+        <p className="text-[10px] uppercase font-mono tracking-wider font-bold text-zinc-500">Deployment Pipeline</p>
+        <div className="flex items-center justify-between gap-1 text-[11px] font-mono">
+          <div className="px-2 py-1 rounded bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 text-center flex-1">
+            Next.js / Docker
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 text-center flex-1">
+            ORCID / Stripe
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 text-center flex-1">
+            Neon Serverless DB
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (id === 'fixup-report') {
+    return (
+      <div className="mt-4 p-3 bg-zinc-100 dark:bg-zinc-950/60 border border-zinc-200/50 dark:border-zinc-800/60 rounded-lg space-y-2">
+        <p className="text-[10px] uppercase font-mono tracking-wider font-bold text-zinc-500">Security & Reconciliation Flow</p>
+        <div className="flex items-center justify-between gap-1 text-[11px] font-mono">
+          <div className="px-2 py-1 rounded bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 text-center flex-1">
+            Multi-Tenant Web
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-red-500/10 text-red-700 dark:text-red-300 border border-red-500/20 text-center flex-1">
+            RBAC Anomaly Check
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 text-center flex-1">
+            Neon PostgreSQL
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
+
 export function ProjectsSection() {
   return (
     <section id="projects" className="py-16 border-b border-zinc-200 dark:border-zinc-800/80">
@@ -50,13 +138,16 @@ export function ProjectsSection() {
                   )}
                 </div>
 
-                {/* Description */}
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                {/* Description - formatted with pre-line to display case study paragraphs */}
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed whitespace-pre-line">
                   {project.description}
                 </p>
 
+                {/* System Architecture Flow Diagram */}
+                <ProjectArchitecture id={project.id} />
+
                 {/* Key Metrics */}
-                <div className="flex flex-wrap gap-1.5 pt-1">
+                <div className="flex flex-wrap gap-1.5 pt-2">
                   {project.metrics.map((metric, mIdx) => (
                     <span
                       key={mIdx}
