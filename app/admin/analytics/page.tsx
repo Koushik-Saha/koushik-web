@@ -26,6 +26,43 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
     }
   };
 
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = [];
+    const maxVisible = 5;
+
+    if (totalPages <= maxVisible) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+
+      let start = Math.max(2, page - 1);
+      let end = Math.min(totalPages - 1, page + 1);
+
+      if (page <= 3) {
+        end = 4;
+      } else if (page >= totalPages - 2) {
+        start = totalPages - 3;
+      }
+
+      if (start > 2) {
+        pages.push('...');
+      }
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
+      if (end < totalPages - 1) {
+        pages.push('...');
+      }
+
+      pages.push(totalPages);
+    }
+    return pages;
+  };
+
   if (token !== adminToken) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white px-4">
@@ -234,7 +271,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
               </div>
 
               {/* Pagination controls */}
-              <div className="flex flex-col sm:flex-row items-center justify-between border-t border-zinc-800/80 pt-4 mt-6 gap-4 text-xs">
+              <div className="flex flex-col xl:flex-row items-center justify-between border-t border-zinc-800/80 pt-4 mt-6 gap-4 text-xs">
                 <div className="text-zinc-500 font-medium">
                   Showing <span className="font-semibold text-zinc-300">{totalSessions === 0 ? 0 : skip + 1}</span> to{' '}
                   <span className="font-semibold text-zinc-300">
@@ -243,32 +280,87 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
                   of <span className="font-semibold text-zinc-300">{totalSessions}</span> sessions
                 </div>
                 {totalPages > 1 && (
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {/* First button */}
+                    {page > 1 ? (
+                      <a
+                        href={`/admin/analytics?token=${token}&page=1`}
+                        className="px-2.5 py-1.5 bg-zinc-900 border border-zinc-800/80 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-colors"
+                        title="First Page"
+                      >
+                        First
+                      </a>
+                    ) : (
+                      <span className="px-2.5 py-1.5 bg-zinc-900/20 border border-zinc-800/40 rounded font-semibold text-zinc-600 cursor-not-allowed">
+                        First
+                      </span>
+                    )}
+
+                    {/* Previous button */}
                     {page > 1 ? (
                       <a
                         href={`/admin/analytics?token=${token}&page=${page - 1}`}
-                        className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-all duration-200"
+                        className="px-2.5 py-1.5 bg-zinc-900 border border-zinc-800/80 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-colors"
                       >
-                        Previous
+                        Prev
                       </a>
                     ) : (
-                      <span className="px-3 py-1.5 bg-zinc-900/20 border border-zinc-800/50 rounded font-semibold text-zinc-600 cursor-not-allowed">
-                        Previous
+                      <span className="px-2.5 py-1.5 bg-zinc-900/20 border border-zinc-800/40 rounded font-semibold text-zinc-600 cursor-not-allowed">
+                        Prev
                       </span>
                     )}
-                    <span className="px-3 py-1.5 text-zinc-500 self-center">
-                      Page {page} of {totalPages}
-                    </span>
+
+                    {/* Page numbers */}
+                    {getPageNumbers().map((p, idx) => {
+                      if (p === '...') {
+                        return (
+                          <span key={`dots-${idx}`} className="px-2.5 py-1.5 text-zinc-500 font-semibold">
+                            ...
+                          </span>
+                        );
+                      }
+                      const isCurrent = p === page;
+                      return (
+                        <a
+                          key={`page-${p}`}
+                          href={`/admin/analytics?token=${token}&page=${p}`}
+                          className={`px-3 py-1.5 rounded font-semibold transition-colors ${
+                            isCurrent
+                              ? 'bg-indigo-600 text-white border border-indigo-500'
+                              : 'bg-zinc-900 border border-zinc-800/80 text-zinc-300 hover:bg-zinc-800'
+                          }`}
+                        >
+                          {p}
+                        </a>
+                      );
+                    })}
+
+                    {/* Next button */}
                     {page < totalPages ? (
                       <a
                         href={`/admin/analytics?token=${token}&page=${page + 1}`}
-                        className="px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-all duration-200"
+                        className="px-2.5 py-1.5 bg-zinc-900 border border-zinc-800/80 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-colors"
                       >
                         Next
                       </a>
                     ) : (
-                      <span className="px-3 py-1.5 bg-zinc-900/20 border border-zinc-800/50 rounded font-semibold text-zinc-600 cursor-not-allowed">
+                      <span className="px-2.5 py-1.5 bg-zinc-900/20 border border-zinc-800/40 rounded font-semibold text-zinc-600 cursor-not-allowed">
                         Next
+                      </span>
+                    )}
+
+                    {/* Last button */}
+                    {page < totalPages ? (
+                      <a
+                        href={`/admin/analytics?token=${token}&page=${totalPages}`}
+                        className="px-2.5 py-1.5 bg-zinc-900 border border-zinc-800/80 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-colors"
+                        title="Last Page"
+                      >
+                        Last
+                      </a>
+                    ) : (
+                      <span className="px-2.5 py-1.5 bg-zinc-900/20 border border-zinc-800/40 rounded font-semibold text-zinc-600 cursor-not-allowed">
+                        Last
                       </span>
                     )}
                   </div>
