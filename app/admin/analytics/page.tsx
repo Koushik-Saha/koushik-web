@@ -12,8 +12,8 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const token = params.token;
   
-  // Use 'admin123' as default if ADMIN_TOKEN env variable is missing
-  const adminToken = process.env.ADMIN_TOKEN || 'admin123';
+  // Use 'Koushik1995!' as default if ADMIN_TOKEN env variable is missing
+  const adminToken = process.env.ADMIN_TOKEN || 'Koushik1995!';
 
   if (token !== adminToken) {
     return (
@@ -35,7 +35,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
               Verify
             </button>
           </form>
-          <p className="text-xs text-zinc-600 mt-4">Hint: The default dev token is <code>admin123</code></p>
+          <p className="text-xs text-zinc-600 mt-4">Hint: The default dev token is <code>Koushik1995!</code></p>
         </div>
       </div>
     );
