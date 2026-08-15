@@ -20,6 +20,7 @@ export interface ProjectItem {
   techStack: string[];
   githubUrl?: string;
   liveUrl?: string;
+  npmUrl?: string;
   featured: boolean;
 }
 

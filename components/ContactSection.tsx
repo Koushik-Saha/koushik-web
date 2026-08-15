@@ -5,6 +5,17 @@ import { motion } from 'framer-motion';
 import { Mail, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { RESUME_DATA } from '@/data/resume';
 
+function ObfuscatedEmail() {
+  return (
+    <span className="inline-flex">
+      <span>koushik.saha666</span>
+      <span className="hidden" aria-hidden="true">antispam-trap</span>
+      <span>@</span>
+      <span>gmail.com</span>
+    </span>
+  );
+}
+
 export function ContactSection() {
   const [formData, setFormData] = useState({
     name: '',
@@ -65,7 +76,7 @@ export function ContactSection() {
                   href={`mailto:${RESUME_DATA.personalInfo.email}`}
                   className="font-mono text-emerald-600 dark:text-emerald-400 underline underline-offset-4 hover:opacity-80"
                 >
-                  {RESUME_DATA.personalInfo.email}
+                  <ObfuscatedEmail />
                 </a>.
               </p>
             </div>
@@ -75,7 +86,7 @@ export function ContactSection() {
                 Direct Email Details
               </div>
               <p className="text-zinc-500 dark:text-zinc-400">
-                All contact form submissions deliver instantly to <strong className="text-zinc-800 dark:text-zinc-200 font-mono">koushik.saha666@gmail.com</strong>.
+                All contact form submissions deliver instantly to <strong className="text-zinc-800 dark:text-zinc-200 font-mono"><ObfuscatedEmail /></strong>.
               </p>
             </div>
           </div>
@@ -97,7 +108,7 @@ export function ContactSection() {
                   Message Sent Successfully!
                 </h3>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400 max-w-sm mx-auto">
-                  Thank you for reaching out. Your message has been routed to <strong>koushik.saha666@gmail.com</strong> and I will respond as soon as possible.
+                  Thank you for reaching out. Your message has been routed to <strong><ObfuscatedEmail /></strong> and I will respond as soon as possible.
                 </p>
                 <button
                   onClick={() => setStatus('idle')}
@@ -185,7 +196,7 @@ export function ContactSection() {
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>Send Message to koushik.saha666@gmail.com</span>
+                      <span>Send Message</span>
                     </>
                   )}
                 </button>

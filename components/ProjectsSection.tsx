@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Layers, ExternalLink, Sparkles } from 'lucide-react';
 import { GithubIcon } from '@/components/Icons';
 import { RESUME_DATA } from '@/data/resume';
@@ -70,6 +70,31 @@ function ProjectArchitecture({ id }: { id: string }) {
     );
   }
 
+  if (id === 'asl-translator') {
+    return (
+      <div className="mt-4 p-3 bg-zinc-100 dark:bg-zinc-950/60 border border-zinc-200/50 dark:border-zinc-800/60 rounded-lg space-y-2">
+        <p className="text-[10px] uppercase font-mono tracking-wider font-bold text-zinc-500">System Architecture</p>
+        <div className="flex items-center justify-between gap-1 text-[11px] font-mono">
+          <div className="px-2 py-1 rounded bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 text-center flex-1">
+            Client UI
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 text-center flex-1" title="Hand landmarks model">
+            MediaPipe
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-red-500/10 text-red-700 dark:text-red-300 border border-red-500/20 text-center flex-1">
+            WebRTC
+          </div>
+          <span className="text-zinc-400">➔</span>
+          <div className="px-2 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 text-center flex-1">
+            Flask API
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (id === 'fixup-report') {
     return (
       <div className="mt-4 p-3 bg-zinc-100 dark:bg-zinc-950/60 border border-zinc-200/50 dark:border-zinc-800/60 rounded-lg space-y-2">
@@ -95,6 +120,12 @@ function ProjectArchitecture({ id }: { id: string }) {
 }
 
 export function ProjectsSection() {
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+
+  const toggleExpand = (id: string) => {
+    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   return (
     <section id="projects" className="py-16 border-b border-zinc-200 dark:border-zinc-800/80">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-10">
@@ -111,37 +142,81 @@ export function ProjectsSection() {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {RESUME_DATA.projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="group flex flex-col justify-between p-6 rounded-xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all hover:-translate-y-1"
-            >
-              <div className="space-y-3">
-                {/* Header Title & Badges */}
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <h3 className="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
-                      {project.subtitle}
-                    </p>
-                  </div>
-                  {project.id === 'mindreframe' && (
-                    <span className="inline-flex items-center gap-1 text-[10px] uppercase font-mono tracking-wider font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-                      <Sparkles className="w-3 h-3" /> AI Native
-                    </span>
-                  )}
-                </div>
+          {RESUME_DATA.projects.map((project, index) => {
+            const descriptionLines = project.description.split('\n');
+            const hasStarDetails = descriptionLines.length > 2;
+            const isExpanded = expanded[project.id];
+            const summaryText = hasStarDetails ? descriptionLines.slice(0, 2).join('\n') : project.description;
+            const detailText = hasStarDetails ? descriptionLines.slice(2).join('\n') : '';
 
-                {/* Description - formatted with pre-line to display case study paragraphs */}
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed whitespace-pre-line">
-                  {project.description}
-                </p>
+            return (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
+                className="group flex flex-col justify-between p-6 rounded-xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all hover:-translate-y-1"
+              >
+                <div className="space-y-3">
+                  {/* Header Title & Badges */}
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h3 className="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                        {project.subtitle}
+                      </p>
+                    </div>
+                    {project.id === 'mindreframe' && (
+                      <span className="inline-flex items-center gap-1 text-[10px] uppercase font-mono tracking-wider font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                        <Sparkles className="w-3 h-3" /> AI Native
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Description - formatted with pre-line to display case study paragraphs */}
+                  <div className="space-y-2">
+                    <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed whitespace-pre-line">
+                      {summaryText}
+                    </p>
+
+                    {hasStarDetails && (
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          toggleExpand(project.id);
+                        }}
+                        className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 flex items-center gap-1 focus:outline-none transition-colors"
+                      >
+                        <span>{isExpanded ? 'Collapse STAR Details' : 'Read Full STAR Case Study'}</span>
+                        <motion.span
+                          animate={{ rotate: isExpanded ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="inline-block text-[8px]"
+                        >
+                          ▼
+                        </motion.span>
+                      </button>
+                    )}
+
+                    <AnimatePresence initial={false}>
+                      {hasStarDetails && isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pt-2 mt-2 border-t border-zinc-200/60 dark:border-zinc-800/60 text-xs text-zinc-500 dark:text-zinc-400 whitespace-pre-line leading-relaxed space-y-2">
+                            {detailText}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
 
                 {/* System Architecture Flow Diagram */}
                 <ProjectArchitecture id={project.id} />
@@ -173,7 +248,7 @@ export function ProjectsSection() {
                 </div>
 
                 <div className="flex items-center space-x-2 shrink-0">
-                  {project.githubUrl && (
+                  {project.githubUrl ? (
                     <a
                       href={project.githubUrl}
                       target="_blank"
@@ -182,6 +257,21 @@ export function ProjectsSection() {
                       aria-label="View Source Code"
                     >
                       <GithubIcon className="w-4 h-4" />
+                    </a>
+                  ) : (
+                    <span className="text-[10px] font-mono font-medium text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800/80 rounded px-2 py-0.5 bg-zinc-100/50 dark:bg-zinc-900/50" title="Source code is confidential">
+                      Private Repo
+                    </span>
+                  )}
+                  {project.npmUrl && (
+                    <a
+                      href={project.npmUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-0.5 border border-red-500/20 hover:border-red-500/40 rounded text-[10px] font-mono font-semibold bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-500/20 transition-all flex items-center gap-1"
+                      aria-label="View npm Package"
+                    >
+                      <span>npm</span>
                     </a>
                   )}
                   {project.liveUrl && (
@@ -197,8 +287,9 @@ export function ProjectsSection() {
                   )}
                 </div>
               </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

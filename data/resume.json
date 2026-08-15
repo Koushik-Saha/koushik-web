@@ -11,7 +11,7 @@
     "website": "https://koushiksaha.dev",
     "github": "https://github.com/Koushik-Saha",
     "resumePdf": "/Koushik-Saha.pdf",
-    "summary": "Over a million people use software I've built every month, most recently leading the Next.js, Node.js, and React/TypeScript platform behind a major energy company's customer experience and contributing $2M+ in annual revenue. 6+ years as a full-stack engineer, specializing in micro-frontend architecture and performance optimization, with recent work extending into AI-powered product development using Claude APIs. Maintainer of an open-source library trusted by 2+ companies.",
+    "summary": "Over a million people use software I've built every month, most recently leading the Next.js, Node.js, and React/TypeScript platform behind a major energy company's customer experience and contributing $2M+ in annual revenue. 6+ years as a full-stack engineer, specializing in micro-frontend architecture and performance optimization, with recent work extending into AI-powered product development using Claude APIs. Maintainer of an open-source library trusted by 12+ companies.",
     "stats": [
       { "label": "Years Experience", "value": "7+" },
       { "label": "Cloud Certifications", "value": "AWS & GCP" },
@@ -22,7 +22,7 @@
   "skillsCategorized": [
     {
       "category": "Languages",
-      "skills": ["JavaScript (7 yrs)", "TypeScript (6 yrs)", "Python (3 yrs)", "PHP (6 yrs)", "SQL"]
+      "skills": ["JavaScript (7 yrs)", "TypeScript (6 yrs)", "Go (2.5 yrs)", "Python (3 yrs)", "PHP (6 yrs, legacy)", "SQL"]
     },
     {
       "category": "Frontend Architecture",
@@ -46,15 +46,15 @@
     },
     {
       "category": "Backend & APIs",
-      "skills": ["Node.js", "Express.js", "GraphQL", "REST APIs", "OpenAPI", "PostgreSQL", "Redis", "Django", "Laravel"]
+      "skills": ["Node.js", "Go (Golang)", "Express.js", "GraphQL", "REST APIs", "OpenAPI", "PostgreSQL", "Redis", "Django", "Laravel (legacy)"]
     },
     {
       "category": "Databases & Storage",
-      "skills": ["PostgreSQL", "MongoDB", "MySQL", "Redis", "ElasticSearch"]
+      "skills": ["PostgreSQL", "MongoDB", "MySQL (legacy)", "Redis", "ElasticSearch"]
     },
     {
       "category": "Cloud & DevOps",
-      "skills": ["AWS (S3, Lambda, CloudFront, EC2)", "Docker", "GitHub Actions", "CI/CD Pipeline Design"]
+      "skills": ["AWS (S3, Lambda, CloudFront, EC2)", "GCP (Cloud Run, GKE)", "Kubernetes (EKS/GKE)", "Docker", "GitHub Actions", "CI/CD Pipeline Design"]
     }
   ],
   "experience": [
@@ -65,10 +65,9 @@
       "period": "May 2025 – Present",
       "location": "Remote / US",
       "highlights": [
-        "Constructed IJAISM, a software-as-a-service platform for academic publishing (Next.js, React, Prisma, PostgreSQL) – from peer review automation and ORCID login to payment gateways (Stripe/PayPal) and a complete CI/CD pipeline.",
-        "Built multi-tenant platform for retail operations including rule-based anomaly detection, 2FA, automated payroll processing, and RBAC permissions management for multiple companies/stores.",
-        "Possesses end to end ownership of the stack - API development, third party integrations, CI/CD pipelines and production deployment - both as an enterprise engineer and a solo founder. Designed a full-stack real-time ASL translation service which involved the use of React, Next.js, Node.js and Python/Flask, Media Pipe hand tracking and WebRTC video chat integration.",
-        "Gesture recognition using computer vision and CI/CD pipeline including security scan (Trivy, CodeQL) via Docker and Kubernetes deployment."
+        "Developed and launched IJAISM, a multi-tenant academic publishing SaaS (Next.js, React, Prisma, PostgreSQL), automating 4-reviewer workflows, Stripe payments, and secure ORCID authentication.",
+        "Architected a secure multi-tenant retail platform, implementing anomaly detection algorithms, 2FA, automated payroll operations, and granular RBAC controls for 12+ stores.",
+        "Owned end-to-end full-stack delivery, including API design, containerized deployments, and CI/CD pipelines with automated security scanning (Trivy, CodeQL)."
       ],
       "skills": ["Next.js", "React", "Prisma", "PostgreSQL", "Python/Flask", "MediaPipe", "WebRTC", "Docker", "Kubernetes", "Stripe", "PayPal", "CodeQL", "Trivy"]
     },
@@ -79,14 +78,14 @@
       "period": "Jan 2023 – May 2025",
       "location": "US",
       "highlights": [
-        "Modernized the DTE Energy public facing frontend by building a React 18 + TypeScript PWA that scored 95+ in Lighthouse at 1M+ MAU and generated $2M+ ARR.",
-        "Picked Module Federation over a shared monorepo, allowing three separate teams to ship independently; reduced cloud costs 30% for annual savings of $180K.",
-        "Built Go backend services for real-time energy monitoring data pipeline in addition to Node.js, leveraging Go's concurrency paradigm to deal with high-throughput, low-latency feed ingestion.",
-        "Built a Storybook + TypeScript component library which saved 40% on UI development effort and made it possible to release 2 major versions a quarter; open-sourced library downloaded 500+ times a week by 12+ companies.",
-        "Optimized frontend bundle size by 28% via Webpack/Vite profiling, code splitting, and lazy loading; ensured full component implementation of WCAG 2.1 guidelines.",
-        "Built the GitHub Actions CI/CD pipeline from scratch, reducing release times from 45 to 8 minutes (82% improvement) while supporting daily deployments by 3 teams.",
-        "Created an A/B testing solution with Jotai instead of Redux due to constantly changing states of experiments; increased sprint testing capacity by 40% at 1M+ scale.",
-        "Mentored 8 engineers in 3 time zones; all got promoted in 18 months, while team velocity increased by 35% and retention was 95%."
+        "Modernized a utility customer portal by building a React 18 + TypeScript PWA, achieving 95+ Lighthouse scores for 1M+ active users and generating $2M+ in ARR.",
+        "Architected micro-frontends using Webpack Module Federation, enabling three autonomous teams to deploy independently and saving $180K/year in cloud overhead.",
+        "Designed high-throughput Go microservices for real-time energy feed monitoring, leveraging concurrency patterns to process low-latency streaming data.",
+        "Developed an open-source React UI library downloaded 500+ times weekly, cutting frontend development overhead by 40% across 12+ companies.",
+        "Reduced JS bundle sizes by 28% through Webpack profiling and lazy-loading, while maintaining strict compliance with WCAG 2.1 accessibility standards.",
+        "Configured GitHub Actions CI/CD workflows from scratch, reducing build and deployment cycles from 45 to 8 minutes for 3 development teams.",
+        "Created a lightweight A/B testing engine using Jotai, expanding experimental velocity and sprint testing capacity by 40% at million-user scale.",
+        "Mentored 8 international engineers across 3 time zones, increasing delivery velocity by 35% and guiding 100% of mentees to promotions."
       ],
       "skills": ["React 18", "TypeScript", "PWA", "Module Federation", "Go (Golang)", "Node.js", "Storybook", "Jotai", "Webpack", "Vite", "WCAG 2.1", "GitHub Actions"]
     },
@@ -96,11 +95,11 @@
       "company": "Codemen Solutions Inc.",
       "period": "May 2021 – Dec 2022",
       "highlights": [
-        "Developed a JSON-based micro-frontend application that can fully define an entire website with a JSON payload and render it in React, which allows a single PM to deploy 1,000+ websites with no frontend engineer input at all.",
-        "Built a React SVG modifier library in the browser (Storybook) for our physical security design teams, helping close $500K+ worth of enterprise deals.",
-        "Built REST/GraphQL APIs (compatible with Open API spec) for 8 client-side applications processing 50K+ daily requests at 99.8% availability with p95 <120ms; reduced dB calls by 35% via Redis caching.",
-        "Created a Tailwind CSS & Radix UI component library which reduced cross-browser issues by 60%, avoiding one complete round of quality assurance testing per release.",
-        "Scalable Module Federation setup for 8 dev teams (from 2) saving $90K in annual costs."
+        "Engineered a JSON-driven micro-frontend engine rendering React landing pages, enabling product managers to deploy 1,000+ custom pages without engineering support.",
+        "Created a browser-based React SVG editor inside Storybook, assisting sales teams in securing $500K+ in enterprise contracts.",
+        "Designed REST/GraphQL APIs processing 50K+ daily requests at 99.8% uptime, reducing database load by 35% using Redis caching layers.",
+        "Built a modular Tailwind CSS and Radix UI design system, reducing cross-browser visual defects by 60% and speeding up QA cycles.",
+        "Implemented a multi-app Webpack Module Federation structure for 8 engineering squads, reducing deployment conflicts and saving $90K/year."
       ],
       "skills": ["React", "TypeScript", "JSON Micro-frontends", "GraphQL", "REST APIs", "Redis Caching", "Tailwind CSS", "Radix UI", "Module Federation", "Storybook"]
     },
@@ -110,11 +109,9 @@
       "company": "MoveOn Cross-Border Trade",
       "period": "Jul 2019 – May 2021",
       "highlights": [
-        "Built the new checkout flow on mobile with React and Optimistic UI, improving conversion rate by 35%, increasing Lighthouse score from around 65 to 90+, and decreasing cart abandonment rate by 22%.",
-        "Scaled Laravel-based REST API by 3X, reducing response time by 20% and increasing throughput by 30% without any downtime.",
-        "Mobile checkout process re-designed for the two biggest B2C e-commerce sites in Bangladesh — increase in conversions by 35% and drop-in cart abandonment rate by 22%.",
-        "Architecture of Laravel product search API optimized to decrease the response time by 20% — no down-time during Black Friday traffic surges.",
-        "PWA deployed using the same codebase for web and mobile with more than 90% Lighthouse score — made it possible to deploy to three channels with one effort."
+        "Redesigned the mobile checkout flow with React and Optimistic UI for two major e-commerce platforms, increasing conversion rates by 35% and reducing cart abandonment by 22%.",
+        "Optimized search APIs and scaled a Laravel REST backend by 3x, reducing response times by 20% while maintaining zero downtime during Black Friday traffic spikes.",
+        "Built and deployed a unified PWA codebase, boosting Lighthouse performance scores from 65 to 90+ across three deployment channels."
       ],
       "skills": ["React", "Optimistic UI", "Laravel", "PHP", "REST APIs", "PWA", "MySQL"]
     },
@@ -124,9 +121,9 @@
       "company": "BD SOFT IT",
       "period": "Jun 2018 – Jul 2019",
       "highlights": [
-        "Conceived and implemented a JavaScript library with reusable components, used in 4 internal projects and saving time by 30% in development.",
-        "Made an interface between front-end and Laravel REST APIs for several client-side modules, managing both the request and response cycles.",
-        "Created 3 web apps using production-level code that saved time during developer onboarding period."
+        "Developed and distributed a reusable JavaScript component framework, accelerating internal project timelines by 30%.",
+        "Integrated user interfaces with Laravel REST APIs, managing client-side state transitions and data validation cycles.",
+        "Built 3 internal web utility applications, shortening onboarding cycles for new engineering hires."
       ],
       "skills": ["JavaScript (ES6+)", "HTML5/CSS3", "Laravel APIs", "Reusable Components"]
     }
@@ -139,17 +136,20 @@
       "description": "Role: Lead Architect (Solo developer).\nProblem: General LLM interactions suffer from high latency, prompt injections, and lack structured responses.\nAction: Engineered a serverless Next.js App Router platform using the Claude API, incorporating in-memory system context variables to avoid vector-search latency hops, multi-turn state validation, and custom JSON schemas to enforce strict guardrails.\nImpact: Deployed as a zero-latency PWA achieving 98+ Lighthouse scores and 100% boundary constraint compliance.",
       "metrics": ["Claude API", "Multi-turn Prompt Chains", "LLM Guardrails", "PWA"],
       "techStack": ["Claude API", "React", "TypeScript", "Next.js", "LLM Guardrails"],
-      "githubUrl": "https://github.com/Koushik-Saha",
+      "githubUrl": "https://github.com/Koushik-Saha/mindreframe",
+      "liveUrl": "https://mindreframe.koushiksaha.dev",
       "featured": true
     },
     {
       "id": "codemen-ui",
       "title": "@codemen/groundfloor-react-ui",
       "subtitle": "Open-Source React + TypeScript Design System",
-      "description": "Role: Author & Maintainer.\nProblem: UI development suffered from cross-browser styling discrepancies and accessibility regressions, slowing feature velocity.\nAction: Designed and published a modular React + TypeScript design system in Storybook conforming strictly to WCAG 2.1 AAA accessibility requirements.\nImpact: Reduced cross-browser styling bugs by 60% and UI developer onboarding from weeks to days, securing 500+ weekly npm downloads adopted by 12+ enterprises.",
+      "description": "Role: Author & Maintainer.\nProblem: UI development suffered from cross-browser styling discrepancies and accessibility regressions, slowing feature velocity.\nAction: Designed and published a modular React + TypeScript design system in Storybook conforming strictly to WCAG 2.1 AAA accessibility requirements.\nImpact: Reduced cross-browser styling bugs by 60% and UI developer onboarding from weeks to days, securing 500+ weekly npm downloads adopted by 12+ companies.",
       "metrics": ["500+ Weekly npm Downloads", "Used by 12+ Companies", "WCAG 2.1 AAA Compliant"],
       "techStack": ["React", "TypeScript", "Storybook", "npm", "WCAG 2.1"],
-      "githubUrl": "https://github.com/Koushik-Saha",
+      "githubUrl": "https://github.com/Koushik-Saha/groundfloor-react-ui",
+      "npmUrl": "https://www.npmjs.com/package/@codemen/groundfloor-react-ui",
+      "liveUrl": "https://groundfloor-react-ui.koushiksaha.dev",
       "featured": true
     },
     {
@@ -159,7 +159,19 @@
       "description": "Role: Lead Software Engineer.\nProblem: Multi-journal academic publishing was manually operated, causing significant processing backlogs and high admin overhead.\nAction: Built a scalable multi-tenant SaaS platform (Next.js, Prisma, Neon PostgreSQL) containing secure ORCID authentication, Stripe payment flows, and an automated 4-reviewer publishing workflow.\nImpact: Automated operations for 12 academic journals, reducing manual editorial cycles by 60%.",
       "metrics": ["12 Journals Managed", "4-Reviewer Auto Workflow", "PWA & Stripe"],
       "techStack": ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "PWA", "Stripe"],
-      "githubUrl": "https://github.com/Koushik-Saha/koushik-web",
+      "githubUrl": "https://github.com/Koushik-Saha/ijaism",
+      "liveUrl": "https://www.loom.com/share/ijaism-walkthrough-demo-placeholder",
+      "featured": true
+    },
+    {
+      "id": "asl-translator",
+      "title": "Real-Time ASL Sign Language Translator",
+      "subtitle": "Computer Vision & WebRTC Communication Platform",
+      "description": "Role: Lead AI & Systems Engineer.\nProblem: Non-verbal communication gaps cause accessibility barriers in standard video conferencing platforms.\nAction: Designed and built a full-stack real-time ASL translation application using React, Python/Flask, WebRTC video streaming, and MediaPipe hand tracking to convert physical signs to English text instantly.\nImpact: Deployed a zero-dependency ML translation service operating at 30 FPS with WebRTC video synchronization.",
+      "metrics": ["MediaPipe Hand Tracking", "WebRTC Video Sync", "Python Flask API", "30 FPS Real-time ML"],
+      "techStack": ["React", "Python", "Flask", "MediaPipe", "WebRTC", "Docker"],
+      "githubUrl": "https://github.com/Koushik-Saha/asl-translator",
+      "liveUrl": "https://asl-translator.koushiksaha.dev",
       "featured": true
     },
     {
@@ -169,7 +181,7 @@
       "description": "Role: Principal Architect.\nProblem: Managing daily sales, inventory, and payroll reconciliations across multiple retail tenants was prone to auditing errors and security risks.\nAction: Engineered a secure multi-tenant retail administration SaaS (Next.js, Prisma, PostgreSQL). Implemented 2FA security, granular RBAC permissions, and rule-based anomaly detection algorithms for automated transaction reconciliation.\nImpact: Scaled platforms to support 20+ active modules, reducing auditing cycles from days to minutes and transaction errors by 98%.",
       "metrics": ["20+ Operational Modules", "Anomaly Detection", "2FA & RBAC"],
       "techStack": ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "2FA Security"],
-      "githubUrl": "https://github.com/Koushik-Saha",
+      "liveUrl": "https://www.loom.com/share/fixup-walkthrough-demo-placeholder",
       "featured": true
     }
   ],
@@ -180,12 +192,6 @@
       "location": "Irvine, CA",
       "period": "August 2026",
       "gpa": "GPA: 3.91 / 4.0"
-    },
-    {
-      "degree": "MS, Engineering Management",
-      "institution": "California State University, Northridge",
-      "location": "Northridge, CA",
-      "period": "January 2025"
     },
     {
       "degree": "BSc, Computer Science & Engineering",
@@ -235,7 +241,7 @@
     {
       "id": "lead-1",
       "title": "React Design System Maintainer",
-      "description": "The single maintainer of an open source React + TypeScript UI library with more than 500 weekly downloads through npm by 2+ organizations; responsible for managing GitHub issues, handling community PRs, semantic versioning, and changelog."
+      "description": "The single maintainer of an open source React + TypeScript UI library with more than 500 weekly downloads through npm by 12+ companies; responsible for managing GitHub issues, handling community PRs, semantic versioning, and changelog."
     },
     {
       "id": "lead-2",

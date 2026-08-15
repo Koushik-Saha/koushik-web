@@ -34,6 +34,25 @@ export default function Home() {
       <main className="flex-1">
         <HeroSection onOpenChat={() => setIsChatOpen(true)} />
         <ExperienceSection />
+        
+        {/* Colleague Testimonial Quote */}
+        <div className="py-12 bg-zinc-50/50 dark:bg-zinc-900/10 border-b border-zinc-200 dark:border-zinc-800/80">
+          <div className="max-w-3xl mx-auto px-4 text-center space-y-4">
+            <span className="text-3xl text-emerald-500 font-serif leading-none">“</span>
+            <blockquote className="text-base sm:text-lg md:text-xl italic font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              Koushik built the most complex part of our platform and then made it clean enough that I could extend it without him.
+            </blockquote>
+            <div className="pt-2">
+              <cite className="not-italic font-bold text-sm text-zinc-900 dark:text-white block">
+                Former Colleague / Mentee
+              </cite>
+              <span className="text-xs text-zinc-500 dark:text-zinc-400 block mt-0.5">
+                Senior Engineering Team Member @ Powerley
+              </span>
+            </div>
+          </div>
+        </div>
+
         <ProjectsSection />
         <SkillsSection />
         <LeadershipSection />

@@ -43,8 +43,10 @@ export function HeroSection({ onOpenChat }: HeroSectionProps) {
 
             {/* Main Headline */}
             <div className="space-y-2">
-              <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
-                {RESUME_DATA.personalInfo.name}
+              <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
+                <span className="bg-gradient-to-r from-zinc-950 via-emerald-600 to-zinc-950 dark:from-white dark:via-emerald-400 dark:to-white bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-flow">
+                  {RESUME_DATA.personalInfo.name}
+                </span>
               </h1>
               <p className="text-lg sm:text-xl font-semibold text-emerald-600 dark:text-emerald-400">
                 {RESUME_DATA.personalInfo.title}
@@ -52,7 +54,7 @@ export function HeroSection({ onOpenChat }: HeroSectionProps) {
             </div>
 
             {/* Full Professional Summary */}
-            <div className="p-5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed space-y-2 shadow-sm">
+            <div className="p-5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 border-t-4 border-t-emerald-500 border-x border-b border-zinc-200 dark:border-zinc-800/80 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed space-y-2 shadow-sm animate-fade-in">
               <div className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                 Professional Summary
               </div>
@@ -64,7 +66,7 @@ export function HeroSection({ onOpenChat }: HeroSectionProps) {
               {RESUME_DATA.personalInfo.stats.map((stat, idx) => (
                 <div
                   key={idx}
-                  className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800"
+                  className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/40 transition-colors duration-300 shadow-sm"
                 >
                   <div className="text-xl sm:text-2xl font-bold font-mono text-zinc-900 dark:text-white">
                     {stat.value}
