@@ -128,52 +128,6 @@ export async function POST(req: Request) {
     console.log(`User Agent: ${userAgent}`);
     console.log('------------------------------------');
 
-    const mailtrapToken = process.env.MAILTRAP_TOKEN;
-
-    if (!mailtrapToken) {
-      return NextResponse.json({
-        success: true,
-        mode: 'preview',
-        message: 'Visitor telemetry logged. Set MAILTRAP_TOKEN to receive instant email notifications.'
-      });
-    }
-
-    const emailSubject = `🚨 New Portfolio Visitor from ${location !== 'Unknown Location' ? location : 'Direct Link'}!`;
-
-    const emailText = `A new visitor has just entered your portfolio website!\n\n` +
-      `📌 VISIT SUMMARY:\n` +
-      `• Date & Time: ${timestamp} (CT)\n` +
-      `• Location / IP: ${location} (${ip})\n` +
-      `• Referrer Source: ${referrer || 'Direct / Email / Bookmark'}\n` +
-      `• Page Viewed: ${pageUrl || '/'}\n` +
-      `• Device / User Agent: ${userAgent}\n` +
-      `• Screen Size: ${screenResolution || 'Desktop'}\n` +
-      `• Preferred Language: ${language || 'en-US'}\n\n` +
-      `--- Sent automatically by your Next.js Portfolio Visitor Analytics Tracker.`;
-
-    try {
-      const mailtrapRes = await fetch("https://send.api.mailtrap.io/api/send", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${mailtrapToken}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          from: { email: "analytics@koushiksaha.dev", name: "Portfolio Analytics" },
-          to: [{ email: NOTIFICATION_EMAIL }],
-          subject: emailSubject,
-          text: emailText
-        })
-      });
-
-      if (!mailtrapRes.ok) {
-        const errText = await mailtrapRes.text();
-        console.error('Mailtrap Analytics email sending failed:', errText);
-      }
-    } catch (mailtrapErr) {
-      console.error('Mailtrap Analytics email network error:', mailtrapErr);
-    }
-
     return NextResponse.json({ success: true });
   } catch (err: unknown) {
     console.error('Analytics API Error:', err);
