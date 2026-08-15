@@ -21,12 +21,12 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: 'Mailtrap configuration token missing' }, { status: 500 });
     }
 
-    // 2. Fetch all sessions from the last 12 hours
-    const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000);
+    // 2. Fetch all sessions from the last 24 hours
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     const sessions = await prisma.session.findMany({
       where: {
         createdAt: {
-          gte: twelveHoursAgo
+          gte: oneDayAgo
         }
       },
       include: {
@@ -38,12 +38,12 @@ export async function GET(req: Request) {
     });
 
     if (sessions.length === 0) {
-      console.log('No new sessions in the last 12 hours. Skipping digest email.');
+      console.log('No new sessions in the last 24 hours. Skipping digest email.');
       return NextResponse.json({ success: true, message: 'No new sessions, email skipped.' });
     }
 
     // 3. Format the email body
-    let emailText = `📊 Here is your Portfolio Visitor Analytics digest for the last 12 hours.\n\n`;
+    let emailText = `📊 Here is your Portfolio Visitor Analytics digest for the last 24 hours.\n\n`;
     emailText += `Summary: ${sessions.length} unique visitor session(s) recorded.\n`;
     emailText += `=========================================\n\n`;
 
