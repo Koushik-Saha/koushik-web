@@ -7,6 +7,36 @@ export function VisitorTracker() {
     let clientIp = '';
     let clientCity = '';
     let clientCountry = '';
+    let clientIsp = '';
+
+    const getGpuRenderer = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        const gl = (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
+        if (gl) {
+          const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+          if (debugInfo) {
+            return (gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) as string) || '';
+          }
+        }
+      } catch {
+        // ignore
+      }
+      return '';
+    };
+
+    const getExtraTelemetry = () => {
+      const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+      const connectionSpeed = connection ? connection.effectiveType || '' : '';
+      return {
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+        deviceMemory: (navigator as any).deviceMemory || null,
+        hardwareConcurrency: navigator.hardwareConcurrency || null,
+        gpu: getGpuRenderer(),
+        theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+        connectionSpeed
+      };
+    };
 
     // Fetch client IP/Geo info to support localhost testing and fallback geo-resolution
     const fetchGeoData = async () => {
@@ -17,6 +47,7 @@ export function VisitorTracker() {
           clientIp = data.ip || '';
           clientCity = data.city || '';
           clientCountry = data.country_name || '';
+          clientIsp = data.org || '';
         }
       } catch {
         // Fallback silently
@@ -29,6 +60,7 @@ export function VisitorTracker() {
         if (alreadyTracked) return;
 
         await fetchGeoData();
+        const extra = getExtraTelemetry();
 
         const payload = {
           type: 'visit',
@@ -39,7 +71,9 @@ export function VisitorTracker() {
           userAgent: navigator.userAgent,
           clientIp,
           clientCity,
-          clientCountry
+          clientCountry,
+          clientIsp,
+          ...extra
         };
 
         await fetch('/api/analytics', {
@@ -91,6 +125,8 @@ export function VisitorTracker() {
         if (!clientIp) {
           await fetchGeoData();
         }
+        
+        const extra = getExtraTelemetry();
 
         const payload = {
           type: 'click',
@@ -100,7 +136,9 @@ export function VisitorTracker() {
           clickTarget,
           clientIp,
           clientCity,
-          clientCountry
+          clientCountry,
+          clientIsp,
+          ...extra
         };
 
         fetch('/api/analytics', {

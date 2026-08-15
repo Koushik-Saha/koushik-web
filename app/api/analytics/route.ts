@@ -19,7 +19,14 @@ export async function POST(req: Request) {
       clickTarget,
       clientIp,
       clientCity,
-      clientCountry
+      clientCountry,
+      clientIsp,
+      timezone,
+      deviceMemory,
+      hardwareConcurrency,
+      gpu,
+      theme,
+      connectionSpeed
     } = body;
 
     // Extract Headers & Telemetry
@@ -67,7 +74,14 @@ export async function POST(req: Request) {
             location,
             screenResolution: screenResolution || 'Unknown',
             language: language || 'en-US',
-            userAgent
+            userAgent,
+            timezone: timezone || null,
+            deviceMemory: typeof deviceMemory === 'number' ? deviceMemory : null,
+            hardwareConcurrency: typeof hardwareConcurrency === 'number' ? hardwareConcurrency : null,
+            gpu: gpu || null,
+            theme: theme || null,
+            connectionSpeed: connectionSpeed || null,
+            isp: clientIsp || null
           }
         });
         sessionId = session.id;

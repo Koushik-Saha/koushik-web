@@ -240,6 +240,33 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
                         Browser: <span className="text-zinc-500">{session.userAgent.slice(0, 70)}...</span>
                       </p>
 
+                      {/* Display Hardware & ISP details if they exist */}
+                      {(session.timezone || session.isp || session.gpu || session.deviceMemory || session.hardwareConcurrency || session.theme || session.connectionSpeed) && (
+                        <div className="text-[10px] text-zinc-500 font-mono flex flex-wrap gap-x-2 gap-y-1 bg-zinc-950/20 p-1.5 rounded border border-zinc-800/40">
+                          {session.timezone && (
+                            <span>🌐 <span className="text-zinc-400 font-semibold">{session.timezone}</span></span>
+                          )}
+                          {session.isp && (
+                            <span>🏢 <span className="text-zinc-400 font-semibold">{session.isp}</span></span>
+                          )}
+                          {session.deviceMemory && (
+                            <span>💾 <span className="text-zinc-400 font-semibold">{session.deviceMemory}GB RAM</span></span>
+                          )}
+                          {session.hardwareConcurrency && (
+                            <span>💻 <span className="text-zinc-400 font-semibold">{session.hardwareConcurrency} Cores</span></span>
+                          )}
+                          {session.gpu && (
+                            <span className="truncate max-w-[200px]" title={session.gpu}>🎮 <span className="text-zinc-400 font-semibold">{session.gpu.split('/').pop()}</span></span>
+                          )}
+                          {session.theme && (
+                            <span>🎨 <span className="text-zinc-400 font-semibold">{session.theme}</span></span>
+                          )}
+                          {session.connectionSpeed && (
+                            <span>⚡ <span className="text-zinc-400 font-semibold">{session.connectionSpeed}</span></span>
+                          )}
+                        </div>
+                      )}
+
                       {/* Event Log inside this session */}
                       <div className="mt-2 pl-3 py-1.5 bg-zinc-950/60 rounded border border-zinc-800/50 space-y-1">
                         <p className="text-[10px] text-zinc-500 tracking-wider font-semibold uppercase">Interaction Log</p>

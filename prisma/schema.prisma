@@ -8,14 +8,21 @@ generator client {
 }
 
 model Session {
-  id               String           @id @default(uuid())
-  ip               String
-  location         String
-  screenResolution String
-  language         String
-  userAgent        String
-  createdAt        DateTime         @default(now())
-  events           AnalyticsEvent[]
+  id                  String           @id @default(uuid())
+  ip                  String
+  location            String
+  screenResolution    String
+  language            String
+  userAgent           String
+  timezone            String?
+  deviceMemory        Int?
+  hardwareConcurrency Int?
+  gpu                 String?
+  theme               String?
+  connectionSpeed     String?
+  isp                 String?
+  createdAt           DateTime         @default(now())
+  events              AnalyticsEvent[]
 }
 
 model AnalyticsEvent {
