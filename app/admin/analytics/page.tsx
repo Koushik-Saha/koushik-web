@@ -5,7 +5,7 @@ import { Shield, Eye, Monitor, MapPin, Calendar, ExternalLink } from 'lucide-rea
 export const revalidate = 0; // Disable server component caching to ensure live logs
 
 interface PageProps {
-  searchParams: Promise<{ token?: string; page?: string }>;
+  searchParams: Promise<{ token?: string; page?: string; search?: string; location?: string; isp?: string }>;
 }
 
 export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
@@ -89,17 +89,44 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
     );
   }
 
+  const search = params.search || '';
+  const filterLocation = params.location || '';
+  const filterIsp = params.isp || '';
+
+  const whereClause: any = {};
+
+  if (filterLocation) {
+    whereClause.location = filterLocation;
+  }
+
+  if (filterIsp) {
+    whereClause.isp = filterIsp;
+  }
+
+  if (search) {
+    whereClause.OR = [
+      { ip: { contains: search, mode: 'insensitive' } },
+      { location: { contains: search, mode: 'insensitive' } },
+      { isp: { contains: search, mode: 'insensitive' } },
+      { userAgent: { contains: search, mode: 'insensitive' } },
+      { timezone: { contains: search, mode: 'insensitive' } },
+      { gpu: { contains: search, mode: 'insensitive' } }
+    ];
+  }
+
   // 1. Fetch Analytics Stats
-  const [totalSessions, totalPageViews, totalClicks] = await Promise.all([
+  const [totalSessions, totalPageViews, totalClicks, filteredSessionCount] = await Promise.all([
     prisma.session.count(),
     prisma.analyticsEvent.count({ where: { type: 'visit' } }),
-    prisma.analyticsEvent.count({ where: { type: 'click' } })
+    prisma.analyticsEvent.count({ where: { type: 'click' } }),
+    prisma.session.count({ where: whereClause })
   ]);
 
-  const totalPages = Math.ceil(totalSessions / pageSize);
+  const totalPages = Math.ceil(filteredSessionCount / pageSize);
 
   // 2. Fetch recent sessions and their event histories (paginated)
   const sessions = await prisma.session.findMany({
+    where: whereClause,
     orderBy: { createdAt: 'desc' },
     skip,
     take: pageSize,
@@ -109,6 +136,42 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
       }
     }
   });
+
+  // Fetch distinct locations and ISPs dynamically for options
+  const [allLocations, allIsps] = await Promise.all([
+    prisma.session.findMany({
+      select: { location: true },
+      distinct: ['location'],
+      where: { location: { not: '' } }
+    }),
+    prisma.session.findMany({
+      select: { isp: true },
+      distinct: ['isp'],
+      where: { isp: { not: null } }
+    })
+  ]);
+
+  const locationOptions = allLocations
+    .map(l => ({
+      raw: l.location,
+      display: formatLocation(l.location)
+    }))
+    .filter((v, i, a) => a.findIndex(t => t.display === v.display) === i)
+    .sort((a, b) => a.display.localeCompare(b.display));
+
+  const ispOptions = allIsps
+    .map(i => i.isp)
+    .filter((v): v is string => !!v)
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .sort();
+
+  const getPageUrl = (p: number | string) => {
+    let url = `/admin/analytics?token=${token}&page=${p}`;
+    if (search) url += `&search=${encodeURIComponent(search)}`;
+    if (filterLocation) url += `&location=${encodeURIComponent(filterLocation)}`;
+    if (filterIsp) url += `&isp=${encodeURIComponent(filterIsp)}`;
+    return url;
+  };
 
   // 3. Top Clicked Targets
   const topClicks = await prisma.analyticsEvent.groupBy({
@@ -203,6 +266,76 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
           </div>
         </div>
 
+        {/* Dynamic Search & Filter Form Panel */}
+        <form method="GET" action="/admin/analytics" className="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-5 mb-8 backdrop-blur shadow-sm">
+          {/* Keep admin token */}
+          <input type="hidden" name="token" value={token} />
+
+          {/* Search query */}
+          <div className="space-y-1">
+            <label className="text-[10px] uppercase tracking-wider font-mono font-bold text-zinc-500">Text Search</label>
+            <input 
+              type="text" 
+              name="search" 
+              defaultValue={search}
+              placeholder="IP, ISP, Device, GPU..." 
+              className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-md text-xs text-white placeholder-zinc-650 focus:outline-none focus:border-indigo-500 transition-colors"
+            />
+          </div>
+
+          {/* Location Dropdown */}
+          <div className="space-y-1">
+            <label className="text-[10px] uppercase tracking-wider font-mono font-bold text-zinc-500">Location Filter</label>
+            <select 
+              name="location" 
+              defaultValue={filterLocation}
+              className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-md text-xs text-white focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer"
+            >
+              <option value="">All Locations</option>
+              {locationOptions.map((loc, idx) => (
+                <option key={idx} value={loc.raw}>
+                  {loc.display}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* ISP Dropdown */}
+          <div className="space-y-1">
+            <label className="text-[10px] uppercase tracking-wider font-mono font-bold text-zinc-500">ISP / Provider</label>
+            <select 
+              name="isp" 
+              defaultValue={filterIsp}
+              className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-md text-xs text-white focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer"
+            >
+              <option value="">All ISPs</option>
+              {ispOptions.map((ispName, idx) => (
+                <option key={idx} value={ispName}>
+                  {ispName}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-end gap-2">
+            <button 
+              type="submit" 
+              className="flex-1 py-2 bg-indigo-600 hover:bg-indigo-500 transition-colors rounded-md text-xs font-bold text-white cursor-pointer h-[34px]"
+            >
+              Search
+            </button>
+            {(search || filterLocation || filterIsp) && (
+              <a 
+                href={`/admin/analytics?token=${token}`}
+                className="py-2 px-3 bg-zinc-800 hover:bg-zinc-700 transition-colors rounded-md text-xs font-bold text-zinc-300 text-center cursor-pointer h-[34px] flex items-center justify-center"
+              >
+                Clear
+              </a>
+            )}
+          </div>
+        </form>
+
         {/* Dashboard Sections Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
@@ -214,7 +347,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
               </h2>
               <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
                 {sessions.length === 0 ? (
-                  <p className="text-zinc-500 text-sm text-center py-10">No sessions recorded yet.</p>
+                  <p className="text-zinc-500 text-sm text-center py-10">No matching sessions found.</p>
                 ) : (
                   sessions.map((session) => (
                     <div key={session.id} className="border-l-2 border-zinc-800 pl-4 py-1 space-y-2 relative">
@@ -300,18 +433,18 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
               {/* Pagination controls */}
               <div className="flex flex-col xl:flex-row items-center justify-between border-t border-zinc-800/80 pt-4 mt-6 gap-4 text-xs">
                 <div className="text-zinc-500 font-medium">
-                  Showing <span className="font-semibold text-zinc-300">{totalSessions === 0 ? 0 : skip + 1}</span> to{' '}
+                  Showing <span className="font-semibold text-zinc-300">{filteredSessionCount === 0 ? 0 : skip + 1}</span> to{' '}
                   <span className="font-semibold text-zinc-300">
-                    {Math.min(skip + pageSize, totalSessions)}
+                    {Math.min(skip + pageSize, filteredSessionCount)}
                   </span>{' '}
-                  of <span className="font-semibold text-zinc-300">{totalSessions}</span> sessions
+                  of <span className="font-semibold text-zinc-300">{filteredSessionCount}</span> sessions
                 </div>
                 {totalPages > 1 && (
                   <div className="flex flex-wrap items-center gap-1.5">
                     {/* First button */}
                     {page > 1 ? (
                       <a
-                        href={`/admin/analytics?token=${token}&page=1`}
+                        href={getPageUrl(1)}
                         className="px-2.5 py-1.5 bg-zinc-900 border border-zinc-800/80 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-colors"
                         title="First Page"
                       >
@@ -326,7 +459,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
                     {/* Previous button */}
                     {page > 1 ? (
                       <a
-                        href={`/admin/analytics?token=${token}&page=${page - 1}`}
+                        href={getPageUrl(page - 1)}
                         className="px-2.5 py-1.5 bg-zinc-900 border border-zinc-800/80 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-colors"
                       >
                         Prev
@@ -350,7 +483,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
                       return (
                         <a
                           key={`page-${p}`}
-                          href={`/admin/analytics?token=${token}&page=${p}`}
+                          href={getPageUrl(p)}
                           className={`px-3 py-1.5 rounded font-semibold transition-colors ${
                             isCurrent
                               ? 'bg-indigo-600 text-white border border-indigo-500'
@@ -365,7 +498,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
                     {/* Next button */}
                     {page < totalPages ? (
                       <a
-                        href={`/admin/analytics?token=${token}&page=${page + 1}`}
+                        href={getPageUrl(page + 1)}
                         className="px-2.5 py-1.5 bg-zinc-900 border border-zinc-800/80 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-colors"
                       >
                         Next
@@ -379,7 +512,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
                     {/* Last button */}
                     {page < totalPages ? (
                       <a
-                        href={`/admin/analytics?token=${token}&page=${totalPages}`}
+                        href={getPageUrl(totalPages)}
                         className="px-2.5 py-1.5 bg-zinc-900 border border-zinc-800/80 hover:bg-zinc-800 rounded font-semibold text-zinc-300 transition-colors"
                         title="Last Page"
                       >
