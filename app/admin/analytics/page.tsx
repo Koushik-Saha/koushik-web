@@ -5,7 +5,7 @@ import { Shield, Eye, Monitor, MapPin, Calendar, ExternalLink } from 'lucide-rea
 export const revalidate = 0; // Disable server component caching to ensure live logs
 
 interface PageProps {
-  searchParams: Promise<{ token?: string; page?: string; search?: string; location?: string; isp?: string }>;
+  searchParams: Promise<{ token?: string; page?: string; search?: string; location?: string; isp?: string; date?: string }>;
 }
 
 export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
@@ -92,6 +92,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
   const search = params.search || '';
   const filterLocation = params.location || '';
   const filterIsp = params.isp || '';
+  const filterDate = params.date || '';
 
   const whereClause: any = {};
 
@@ -101,6 +102,15 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
 
   if (filterIsp) {
     whereClause.isp = filterIsp;
+  }
+
+  if (filterDate) {
+    const startOfDay = new Date(`${filterDate}T00:00:00.000Z`);
+    const endOfDay = new Date(`${filterDate}T23:59:59.999Z`);
+    whereClause.createdAt = {
+      gte: startOfDay,
+      lte: endOfDay
+    };
   }
 
   if (search) {
@@ -170,6 +180,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
     if (search) url += `&search=${encodeURIComponent(search)}`;
     if (filterLocation) url += `&location=${encodeURIComponent(filterLocation)}`;
     if (filterIsp) url += `&isp=${encodeURIComponent(filterIsp)}`;
+    if (filterDate) url += `&date=${encodeURIComponent(filterDate)}`;
     return url;
   };
 
@@ -267,7 +278,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
         </div>
 
         {/* Dynamic Search & Filter Form Panel */}
-        <form method="GET" action="/admin/analytics" className="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-5 mb-8 backdrop-blur shadow-sm">
+        <form method="GET" action="/admin/analytics" className="grid grid-cols-1 sm:grid-cols-5 gap-4 bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-5 mb-8 backdrop-blur shadow-sm">
           {/* Keep admin token */}
           <input type="hidden" name="token" value={token} />
 
@@ -317,6 +328,17 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
             </select>
           </div>
 
+          {/* Date Picker Input */}
+          <div className="space-y-1">
+            <label className="text-[10px] uppercase tracking-wider font-mono font-bold text-zinc-500">Date Filter</label>
+            <input 
+              type="date" 
+              name="date" 
+              defaultValue={filterDate}
+              className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-md text-xs text-white focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer block h-[34px]"
+            />
+          </div>
+
           {/* Actions */}
           <div className="flex items-end gap-2">
             <button 
@@ -325,7 +347,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
             >
               Search
             </button>
-            {(search || filterLocation || filterIsp) && (
+            {(search || filterLocation || filterIsp || filterDate) && (
               <a 
                 href={`/admin/analytics?token=${token}`}
                 className="py-2 px-3 bg-zinc-800 hover:bg-zinc-700 transition-colors rounded-md text-xs font-bold text-zinc-300 text-center cursor-pointer h-[34px] flex items-center justify-center"
