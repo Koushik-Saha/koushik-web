@@ -79,61 +79,67 @@ export function HeroSection({ onOpenChat }: HeroSectionProps) {
             </div>
 
             {/* CTAs & Social Links */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <a
-                href={RESUME_DATA.personalInfo.resumePdf}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black font-semibold text-sm hover:opacity-90 transition-opacity shadow-sm"
-              >
-                <FileDown className="w-4 h-4" />
-                Download Koushik-Saha.pdf
-              </a>
+            <div className="space-y-4 pt-2">
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href={RESUME_DATA.personalInfo.resumePdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black font-semibold text-sm hover:opacity-90 transition-opacity shadow-sm"
+                >
+                  <FileDown className="w-4 h-4" />
+                  Download Koushik-Saha.pdf
+                </a>
 
-              <button
-                onClick={onOpenChat}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition-colors shadow-sm"
-              >
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                Ask AI Ambassador
-              </button>
+                <button
+                  onClick={onOpenChat}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition-colors shadow-sm cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  Ask AI Ambassador
+                </button>
 
-              <div className="flex items-center space-x-2 pl-2">
-                <a
-                  href={RESUME_DATA.personalInfo.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <LinkedinIcon className="w-4 h-4" />
-                </a>
-                <a
-                  href={RESUME_DATA.personalInfo.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                  aria-label="GitHub"
-                >
-                  <GithubIcon className="w-4 h-4" />
-                </a>
-                <a
-                  href={RESUME_DATA.personalInfo.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                  aria-label="Website"
-                >
-                  <Globe className="w-4 h-4" />
-                </a>
-                <a
-                  href={`mailto:${RESUME_DATA.personalInfo.email}`}
-                  className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                  aria-label="Email"
-                >
-                  <Mail className="w-4 h-4" />
-                </a>
+                <div className="flex items-center space-x-2 pl-2">
+                  <a
+                    href={RESUME_DATA.personalInfo.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                    aria-label="LinkedIn"
+                  >
+                    <LinkedinIcon className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={RESUME_DATA.personalInfo.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                    aria-label="GitHub"
+                  >
+                    <GithubIcon className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={RESUME_DATA.personalInfo.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                    aria-label="Website"
+                  >
+                    <Globe className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={`mailto:${RESUME_DATA.personalInfo.email}`}
+                    className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                    aria-label="Email"
+                  >
+                    <Mail className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-normal flex items-start gap-1.5 max-w-xl">
+                <span>💡</span>
+                <span>Click the <strong>Ask AI Ambassador</strong> button to chat with a custom assistant trained directly on my career achievements, publications, and professional code experience.</span>
+              </p>
             </div>
           </motion.div>
 
