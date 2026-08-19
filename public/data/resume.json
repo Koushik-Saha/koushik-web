@@ -7,7 +7,7 @@
     "phone": "(747) 231-8876",
     "status": "Available for Senior & Lead Full-Stack Software Engineer Roles",
     "email": "koushik.saha666@gmail.com",
-    "linkedin": "https://linkedin.com/in/koushiksaha20",
+    "linkedin": "https://linkedin.com/in/koushik-saha20",
     "website": "https://koushiksaha.dev",
     "github": "https://github.com/Koushik-Saha",
     "resumePdf": "/Koushik-Saha.pdf",
@@ -160,7 +160,7 @@
       "metrics": ["12 Journals Managed", "4-Reviewer Auto Workflow", "PWA & Stripe"],
       "techStack": ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "PWA", "Stripe"],
       "githubUrl": "https://github.com/Koushik-Saha/ijaism",
-      "liveUrl": "https://www.loom.com/share/ijaism-walkthrough-demo-placeholder",
+      "liveUrl": "https://c5k.com/",
       "featured": true
     },
     {
@@ -181,7 +181,7 @@
       "description": "Role: Principal Architect.\nProblem: Managing daily sales, inventory, and payroll reconciliations across multiple retail tenants was prone to auditing errors and security risks.\nAction: Engineered a secure multi-tenant retail administration SaaS (Next.js, Prisma, PostgreSQL). Implemented 2FA security, granular RBAC permissions, and rule-based anomaly detection algorithms for automated transaction reconciliation.\nImpact: Scaled platforms to support 20+ active modules, reducing auditing cycles from days to minutes and transaction errors by 98%.",
       "metrics": ["20+ Operational Modules", "Anomaly Detection", "2FA & RBAC"],
       "techStack": ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "2FA Security"],
-      "liveUrl": "https://www.loom.com/share/fixup-walkthrough-demo-placeholder",
+      "liveUrl": "https://reports.freedomshoppingllc.com/",
       "featured": true
     }
   ],
@@ -235,6 +235,14 @@
       "journal": "Journal of Multidisciplinary Healthcare",
       "year": "2026",
       "status": "Under Review"
+    },
+    {
+      "id": "pub-5",
+      "title": "Integrating Artificial Intelligence with Global Genomic Resources: A Narrative Review of Implications for Precision Medicine",
+      "journal": "Journal of Multidisciplinary Healthcare",
+      "year": "2026",
+      "status": "Published",
+      "doi": "10.2147/JMDH.S623353"
     }
   ],
   "leadership": [
