@@ -35,19 +35,25 @@ export default function Home() {
         <HeroSection onOpenChat={() => setIsChatOpen(true)} />
         <ExperienceSection />
         
-        {/* Colleague Testimonial Quote */}
+        {/* Colleague Recommendation Quote */}
         <div className="py-12 bg-zinc-50/50 dark:bg-zinc-900/10 border-b border-zinc-200 dark:border-zinc-800/80">
           <div className="max-w-3xl mx-auto px-4 text-center space-y-4">
             <span className="text-3xl text-emerald-500 font-serif leading-none">“</span>
             <blockquote className="text-base sm:text-lg md:text-xl italic font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed">
-              Koushik built the most complex part of our platform and then made it clean enough that I could extend it without him.
+              Koushik is the kind of engineer who doesn’t just build features—he builds systems that drive measurable business impact. At Powerley, he played a key role in architecting a micro-frontend system supporting 1M+ active users, balancing clean architecture with real-world performance.
             </blockquote>
             <div className="pt-2">
-              <cite className="not-italic font-bold text-sm text-zinc-900 dark:text-white block">
-                Former Colleague / Mentee
-              </cite>
+              <a 
+                href="https://www.linkedin.com/in/srman/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-flex items-center gap-1.5 not-italic font-bold text-sm text-zinc-900 dark:text-white hover:text-emerald-500 transition-colors"
+              >
+                Saif Rahman
+                <span className="text-xs font-normal text-zinc-400 font-mono">(LinkedIn Recommendation)</span>
+              </a>
               <span className="text-xs text-zinc-500 dark:text-zinc-400 block mt-0.5">
-                Senior Engineering Team Member @ Powerley
+                Senior Software Engineer @ Powerley
               </span>
             </div>
           </div>
