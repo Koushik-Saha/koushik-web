@@ -98,7 +98,7 @@ export function PublicationsSection() {
                   <p className="text-xs text-zinc-600 dark:text-zinc-400">{edu.institution} — {edu.location}</p>
                   {edu.gpa && (
                     <p className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold pt-1">
-                      GPA: {edu.gpa}
+                      {edu.gpa.toLowerCase().startsWith('gpa') ? edu.gpa : `GPA: ${edu.gpa}`}
                     </p>
                   )}
                 </div>
