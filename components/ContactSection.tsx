@@ -117,7 +117,35 @@ export function ContactSection() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <>
+                {/* Active Availability Status Block */}
+                <div className="mb-6 p-4 rounded-xl bg-zinc-100/60 dark:bg-zinc-950/40 border border-zinc-200/60 dark:border-zinc-800/80 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                      Current Availability Status
+                    </h3>
+                  </div>
+                  <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                    Actively interviewing for <strong>Senior or Lead Full-Stack Software Engineer</strong> roles. 
+                    Seeking a collaborative engineering team where I can architect scalable frontends (Next.js/React, Micro-frontends) and high-concurrency microservices (Node.js/Go).
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 pt-1 text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
+                    <div>
+                      <span className="block font-semibold text-zinc-800 dark:text-zinc-200">📍 Location Target:</span>
+                      Austin, TX / Remote / Hybrid
+                    </div>
+                    <div>
+                      <span className="block font-semibold text-zinc-800 dark:text-zinc-200">💼 Work Authorization:</span>
+                      Authorized for US employment (No sponsorship required)
+                    </div>
+                  </div>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
@@ -200,7 +228,8 @@ export function ContactSection() {
                   )}
                 </button>
               </form>
-            )}
+            </>
+          )}
           </motion.div>
         </div>
       </div>

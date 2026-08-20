@@ -55,3 +55,4 @@ export const RESUME_DATA = {
   education: resumeData.education as EducationItem[],
   leadership: resumeData.leadership as LeadershipItem[]
 };
+// Trigger dev server JSON reload: 2026-08-20T02:08:00Z
