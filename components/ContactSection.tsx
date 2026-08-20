@@ -93,9 +93,8 @@ export function ContactSection() {
 
           {/* Form Column */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             className="lg:col-span-7 p-6 sm:p-8 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80"
           >

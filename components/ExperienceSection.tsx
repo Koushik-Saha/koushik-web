@@ -27,9 +27,8 @@ export function ExperienceSection() {
             return (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 className="relative pl-8 sm:pl-10 group"
               >

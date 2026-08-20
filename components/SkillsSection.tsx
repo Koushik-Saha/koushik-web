@@ -25,9 +25,8 @@ export function SkillsSection() {
           {RESUME_DATA.skillsCategorized.map((group, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.04 }}
               className="p-5 rounded-xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors"
             >

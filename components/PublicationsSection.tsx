@@ -27,9 +27,8 @@ export function PublicationsSection() {
               return (
                 <motion.div
                   key={pub.id}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: idx * 0.05 }}
                   className={`p-5 rounded-xl border transition-all space-y-2 ${
                     isPublished
