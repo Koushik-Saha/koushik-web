@@ -158,7 +158,7 @@ export function HeroSection({ onOpenChat }: HeroSectionProps) {
               {/* Avatar Container */}
               <div className="relative w-full h-80 rounded-2xl overflow-hidden bg-slate-100 dark:bg-[#0c0c0f] flex items-center justify-center border border-zinc-200/60 dark:border-zinc-800">
                 <Image
-                  src="/avatar.png"
+                  src="/developer-avatar.png"
                   alt="Koushik Saha 3D Pixar Cartoon Developer Avatar"
                   width={340}
                   height={340}

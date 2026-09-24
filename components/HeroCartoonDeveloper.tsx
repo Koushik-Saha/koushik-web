@@ -120,7 +120,7 @@ export function HeroCartoonDeveloper({ onOpenChat }: HeroCartoonDeveloperProps) 
           {/* High Res 3D Pixar Cartoon Character Image */}
           <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-[#0a0a0d] flex items-center justify-center">
             <Image
-              src="/avatar.png"
+              src="/developer-avatar.png"
               alt="Koushik Saha 3D Animated Pixar Cartoon Developer Character"
               width={420}
               height={420}

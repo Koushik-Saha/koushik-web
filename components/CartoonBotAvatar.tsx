@@ -119,11 +119,11 @@ export function CartoonBotAvatar({ onOpenChat }: CartoonBotAvatarProps) {
         {/* 3D Pixar Cartoon Character Image */}
         <div className="relative w-full h-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-900 flex items-center justify-center">
           <Image
-            src="/avatar.png"
+            src="/developer-avatar.png"
             alt="Koushik Cartoon Character"
-            width={64}
-            height={64}
-            className="object-cover w-full h-full transform scale-110"
+            width={160}
+            height={160}
+            className="object-cover w-full h-full transform scale-[2.2] origin-[50%_30%]"
             priority
           />
         </div>
