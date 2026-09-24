@@ -129,6 +129,54 @@
   ],
   "projects": [
     {
+      "id": "applydesk",
+      "title": "ApplyDesk",
+      "subtitle": "AI Job Application Copilot (Web App + Chrome Extension)",
+      "description": "Role: Solo developer.\nProblem: Tailoring a resume and cover letter for every job is slow, and most AI writing tools invent experience or submit forms without a human review.\nAction: Built a Turborepo monorepo with a Next.js 15 web app and a Manifest V3 Chrome extension (WXT). The extension captures job postings from LinkedIn, Greenhouse, Lever, Ashby, Indeed, and Workday; the web app computes a deterministic 0–100 fit score, uses the Claude API to tailor resume bullets and cover letters grounded only in a verified master profile, renders ATS-safe PDFs, and archives each approved application to Google Drive.\nImpact: The extension autofills forms and attaches the tailored PDFs but never clicks Submit, keeping the user in control of every application; backed by 33 Vitest and Playwright test suites.",
+      "metrics": [
+        "Claude API Grounded Writing",
+        "Deterministic 0–100 Fit Score",
+        "Chrome Extension (MV3)",
+        "Google Drive Sync"
+      ],
+      "techStack": [
+        "Next.js",
+        "TypeScript",
+        "Claude API",
+        "Chrome Extension (WXT)",
+        "Drizzle ORM",
+        "Neon Postgres",
+        "Google Drive API",
+        "Playwright"
+      ],
+      "githubUrl": "https://github.com/Koushik-Saha/applydesk",
+      "featured": true
+    },
+    {
+      "id": "careload",
+      "title": "CareLoad",
+      "subtitle": "Caregiver Burnout Early-Warning System (iOS/Android + API)",
+      "description": "Role: Solo developer.\nProblem: Family caregivers rarely notice burnout until it becomes a crisis, and the seniors they care for can go days without anyone checking in.\nAction: Built a Turborepo monorepo with an Expo React Native app and a Next.js API. Caregivers complete a 2-minute weekly check-in, including the PHQ-2 depression screen, that feeds a weighted 0–100 burnout risk score with week-over-week trends. The platform also places consent-based Twilio voice check-in calls to seniors, turns keypad or spoken answers into daily wellbeing reports, and raises red alerts on emergency or pain keywords for a shared care circle.\nImpact: Gives caregivers an early warning before burnout and a shared circle for splitting care tasks; packaged with Expo EAS for iOS (TestFlight) and Android pilot testing.",
+      "metrics": [
+        "Weighted 0–100 Burnout Score",
+        "PHQ-2 Screening",
+        "Twilio Voice Check-in Calls",
+        "Care Circle Alerts"
+      ],
+      "techStack": [
+        "React Native",
+        "Expo",
+        "Next.js",
+        "TypeScript",
+        "Twilio",
+        "Drizzle ORM",
+        "Neon Postgres",
+        "Better Auth"
+      ],
+      "githubUrl": "https://github.com/Koushik-Saha/Caregiver-Burnout-Early-Warning-System",
+      "featured": true
+    },
+    {
       "id": "mindreframe",
       "title": "MindReframe",
       "subtitle": "AI-Native PWA",
