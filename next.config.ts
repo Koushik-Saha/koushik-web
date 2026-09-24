@@ -4,7 +4,7 @@ const isDev = process.env.NODE_ENV === "development";
 
 // Set to true to roll out CSP changes as report-only (violations are logged in the
 // browser console instead of blocked) before enforcing them.
-const CSP_REPORT_ONLY = true;
+const CSP_REPORT_ONLY = false;
 
 // Nonce-free CSP so pages stay statically rendered. 'unsafe-inline' is needed for the
 // inline scripts Next.js and next-themes inject; 'unsafe-eval' only in dev for React.
