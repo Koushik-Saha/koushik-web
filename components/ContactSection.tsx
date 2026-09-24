@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { RESUME_DATA } from '@/data/resume';
+import { TurnstileWidget, TURNSTILE_SITE_KEY, type TurnstileHandle } from '@/components/TurnstileWidget';
 
 function ObfuscatedEmail() {
   return (
@@ -25,12 +26,20 @@ export function ContactSection() {
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileHandle>(null);
+  const awaitingBotCheck = Boolean(TURNSTILE_SITE_KEY) && !turnstileToken;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setStatus('error');
       setErrorMsg('Please fill in your name, email address, and message.');
+      return;
+    }
+    if (awaitingBotCheck) {
+      setStatus('error');
+      setErrorMsg('Please complete the verification check before sending.');
       return;
     }
 
@@ -41,7 +50,7 @@ export function ContactSection() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, turnstileToken })
       });
 
       const result = await res.json();
@@ -56,6 +65,9 @@ export function ContactSection() {
       console.error(err);
       setStatus('error');
       setErrorMsg(err instanceof Error ? err.message : 'Failed to send message.');
+    } finally {
+      // Turnstile tokens are single-use, so request a fresh one for any retry
+      turnstileRef.current?.reset();
     }
   };
 
@@ -203,6 +215,8 @@ export function ContactSection() {
                   />
                 </div>
 
+                <TurnstileWidget ref={turnstileRef} onTokenChange={setTurnstileToken} />
+
                 {status === 'error' && (
                   <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 shrink-0" />
@@ -212,7 +226,7 @@ export function ContactSection() {
 
                 <button
                   type="submit"
-                  disabled={status === 'loading'}
+                  disabled={status === 'loading' || awaitingBotCheck}
                   className="w-full py-3 px-4 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-black font-semibold text-sm hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center gap-2 shadow-sm"
                 >
                   {status === 'loading' ? (

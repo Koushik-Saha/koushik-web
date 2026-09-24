@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { prisma } from '@/lib/prisma';
+import { getClientIp, rateLimit } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 
 const NOTIFICATION_EMAIL = 'koushik.saha666@gmail.com';
 
 export async function POST(req: Request) {
+  const limited = await rateLimit('analytics', req);
+  if (limited) return limited;
+
   try {
     const body = await req.json().catch(() => ({}));
     const { 
@@ -17,10 +21,6 @@ export async function POST(req: Request) {
       language,
       userAgent: clientUA,
       clickTarget,
-      clientIp,
-      clientCity,
-      clientCountry,
-      clientIsp,
       timezone,
       deviceMemory,
       hardwareConcurrency,
@@ -30,10 +30,8 @@ export async function POST(req: Request) {
     } = body;
 
     // Extract Headers & Telemetry
-    let ip = req.headers.get('x-forwarded-for')?.split(',')[0] || req.headers.get('x-real-ip') || '';
-    if (!ip || ip === '::1' || ip === '127.0.0.1') {
-      ip = clientIp || ip || 'Unknown IP';
-    }
+    const clientIp = getClientIp(req);
+    const ip = clientIp === 'unknown' ? 'Unknown IP' : clientIp;
 
     const decodeHeader = (val: string | null) => {
       if (!val) return '';
@@ -45,9 +43,11 @@ export async function POST(req: Request) {
     };
 
     const userAgent = req.headers.get('user-agent') || clientUA || 'Unknown Browser';
-    const city = decodeHeader(req.headers.get('x-vercel-ip-city') || req.headers.get('cf-ipcity')) || clientCity || '';
-    const country = decodeHeader(req.headers.get('x-vercel-ip-country') || req.headers.get('cf-ipcountry')) || clientCountry || '';
-    const location = [city, country].filter(Boolean).join(', ') || 'Unknown Location';
+    // Geolocation comes from Vercel's edge headers (not available on localhost)
+    const city = decodeHeader(req.headers.get('x-vercel-ip-city'));
+    const region = decodeHeader(req.headers.get('x-vercel-ip-country-region'));
+    const country = decodeHeader(req.headers.get('x-vercel-ip-country'));
+    const location = [city, region, country].filter(Boolean).join(', ') || 'Unknown Location';
 
     const timestamp = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
 
@@ -80,8 +80,7 @@ export async function POST(req: Request) {
             hardwareConcurrency: typeof hardwareConcurrency === 'number' ? hardwareConcurrency : null,
             gpu: gpu || null,
             theme: theme || null,
-            connectionSpeed: connectionSpeed || null,
-            isp: clientIsp || null
+            connectionSpeed: connectionSpeed || null
           }
         });
         sessionId = session.id;

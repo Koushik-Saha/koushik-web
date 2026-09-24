@@ -4,11 +4,6 @@ import { useEffect } from 'react';
 
 export function VisitorTracker() {
   useEffect(() => {
-    let clientIp = '';
-    let clientCity = '';
-    let clientCountry = '';
-    let clientIsp = '';
-
     const getGpuRenderer = () => {
       try {
         const canvas = document.createElement('canvas');
@@ -38,28 +33,11 @@ export function VisitorTracker() {
       };
     };
 
-    // Fetch client IP/Geo info to support localhost testing and fallback geo-resolution
-    const fetchGeoData = async () => {
-      try {
-        const res = await fetch('https://ipapi.co/json/');
-        if (res.ok) {
-          const data = await res.json();
-          clientIp = data.ip || '';
-          clientCity = data.city || '';
-          clientCountry = data.country_name || '';
-          clientIsp = data.org || '';
-        }
-      } catch {
-        // Fallback silently
-      }
-    };
-
     const trackVisit = async () => {
       try {
         const alreadyTracked = sessionStorage.getItem('koushik_portfolio_visited');
         if (alreadyTracked) return;
 
-        await fetchGeoData();
         const extra = getExtraTelemetry();
 
         const payload = {
@@ -69,10 +47,6 @@ export function VisitorTracker() {
           screenResolution: `${window.screen.width}x${window.screen.height}`,
           language: navigator.language || 'en-US',
           userAgent: navigator.userAgent,
-          clientIp,
-          clientCity,
-          clientCountry,
-          clientIsp,
           ...extra
         };
 
@@ -121,11 +95,6 @@ export function VisitorTracker() {
 
         if (!clickTarget) return;
 
-        // If client IP data has not been retrieved yet, try to fetch it
-        if (!clientIp) {
-          await fetchGeoData();
-        }
-        
         const extra = getExtraTelemetry();
 
         const payload = {
@@ -134,10 +103,6 @@ export function VisitorTracker() {
           referrer: document.referrer || 'Direct Link / ATS / Resume PDF',
           userAgent: navigator.userAgent,
           clickTarget,
-          clientIp,
-          clientCity,
-          clientCountry,
-          clientIsp,
           ...extra
         };
 

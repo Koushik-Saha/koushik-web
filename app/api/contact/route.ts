@@ -1,12 +1,17 @@
 import { NextResponse } from 'next/server';
+import { rateLimit } from '@/lib/rate-limit';
+import { verifyTurnstile } from '@/lib/turnstile';
 
 export const runtime = 'nodejs';
 
 const DESTINATION_EMAIL = 'koushik.saha666@gmail.com';
 
 export async function POST(req: Request) {
+  const limited = await rateLimit('contact', req);
+  if (limited) return limited;
+
   try {
-    const { name, email, subject, message } = await req.json();
+    const { name, email, subject, message, turnstileToken } = await req.json();
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -14,6 +19,9 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    const botCheckFailed = await verifyTurnstile(req, turnstileToken);
+    if (botCheckFailed) return botCheckFailed;
 
     const mailtrapToken = process.env.MAILTRAP_TOKEN;
 

@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, X, Send, Bot, User, RefreshCw, ChevronRight } from 'lucide-react';
 import { track } from '@vercel/analytics';
+import { TurnstileWidget, TURNSTILE_SITE_KEY, type TurnstileHandle } from '@/components/TurnstileWidget';
 
 interface AIChatbotDrawerProps {
   isOpen: boolean;
@@ -34,6 +35,9 @@ export function AIChatbotDrawer({ isOpen, onClose }: AIChatbotDrawerProps) {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileHandle>(null);
+  const awaitingBotCheck = Boolean(TURNSTILE_SITE_KEY) && !turnstileToken;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -47,7 +51,7 @@ export function AIChatbotDrawer({ isOpen, onClose }: AIChatbotDrawerProps) {
 
   const handleSend = async (textToSend?: string) => {
     const query = textToSend || input;
-    if (!query.trim() || isLoading) return;
+    if (!query.trim() || isLoading || awaitingBotCheck) return;
 
     const userMsg: Message = {
       id: Date.now().toString(),
@@ -71,15 +75,24 @@ export function AIChatbotDrawer({ isOpen, onClose }: AIChatbotDrawerProps) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content }))
+          messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
+          turnstileToken
         })
       });
+      // Turnstile tokens are single-use, so start fetching a fresh one for the next message
+      turnstileRef.current?.reset();
+
+      const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
+        // Surface rate-limit and bot-check messages directly; other failures use the generic fallback
+        if ((response.status === 429 || response.status === 403) && data.error) {
+          setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: data.error }]);
+          return;
+        }
         throw new Error('API request failed');
       }
 
-      const data = await response.json();
       const assistantMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
@@ -203,7 +216,7 @@ export function AIChatbotDrawer({ isOpen, onClose }: AIChatbotDrawerProps) {
                     <button
                       key={pIdx}
                       onClick={() => handleSend(promptText)}
-                      disabled={isLoading}
+                      disabled={isLoading || awaitingBotCheck}
                       className="text-xs px-2.5 py-1 rounded-full bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors flex items-center gap-1"
                     >
                       <span>{promptText}</span>
@@ -212,6 +225,13 @@ export function AIChatbotDrawer({ isOpen, onClose }: AIChatbotDrawerProps) {
                   ))}
                 </div>
               </div>
+
+              <TurnstileWidget
+                ref={turnstileRef}
+                onTokenChange={setTurnstileToken}
+                appearance="interaction-only"
+                className="flex justify-center"
+              />
 
               {/* Input Footer */}
               <form
@@ -225,12 +245,12 @@ export function AIChatbotDrawer({ isOpen, onClose }: AIChatbotDrawerProps) {
                   type="text"
                   value={input}
                   onChange={e => setInput(e.target.value)}
-                  placeholder="Ask Koushik's AI a question..."
+                  placeholder={awaitingBotCheck ? 'Verifying you are human...' : "Ask Koushik's AI a question..."}
                   className="flex-1 px-3 py-2 text-sm rounded-lg bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white border border-transparent focus:border-zinc-400 dark:focus:border-zinc-600 outline-none transition-colors"
                 />
                 <button
                   type="submit"
-                  disabled={!input.trim() || isLoading}
+                  disabled={!input.trim() || isLoading || awaitingBotCheck}
                   className="p-2 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-black hover:opacity-90 disabled:opacity-40 transition-opacity"
                 >
                   <Send className="w-4 h-4" />

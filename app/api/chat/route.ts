@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { AI_SYSTEM_PROMPT } from '@/data/ai-context';
 import { prisma } from '@/lib/prisma';
+import { rateLimit } from '@/lib/rate-limit';
+import { verifyTurnstile } from '@/lib/turnstile';
 
 export const runtime = 'nodejs';
 
@@ -26,8 +28,11 @@ const PREFERRED_MODELS = [
 ];
 
 export async function POST(req: Request) {
+  const limited = await rateLimit('chat', req);
+  if (limited) return limited;
+
   try {
-    const { messages } = await req.json();
+    const { messages, turnstileToken } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -35,6 +40,9 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    const botCheckFailed = await verifyTurnstile(req, turnstileToken);
+    if (botCheckFailed) return botCheckFailed;
 
     const lastUserMessage = messages[messages.length - 1]?.content || '';
 
