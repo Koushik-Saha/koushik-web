@@ -5,7 +5,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/admin/', // block indexers from security analytics console
     },
     sitemap: 'https://www.koushiksaha.dev/sitemap.xml',
   };

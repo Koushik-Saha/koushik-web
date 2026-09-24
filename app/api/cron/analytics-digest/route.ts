@@ -12,7 +12,8 @@ export async function GET(req: Request) {
     const isLocal = process.env.NODE_ENV === 'development';
     
     // In production, verify Vercel CRON secret
-    if (!isLocal && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    const cronSecret = process.env.CRON_SECRET;
+    if (!isLocal && (!cronSecret || authHeader !== `Bearer ${cronSecret}`)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

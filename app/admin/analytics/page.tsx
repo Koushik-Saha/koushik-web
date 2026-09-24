@@ -15,8 +15,8 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
   const pageSize = 10;
   const skip = (page - 1) * pageSize;
   
-  // Use 'Koushik1995!' as default if ADMIN_TOKEN env variable is missing
-  const adminToken = process.env.ADMIN_TOKEN || 'Koushik1995!';
+  // No fallback: the console stays locked until ADMIN_TOKEN is configured
+  const adminToken = process.env.ADMIN_TOKEN;
 
   const formatLocation = (loc: string) => {
     try {
@@ -63,7 +63,7 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
     return pages;
   };
 
-  if (token !== adminToken) {
+  if (!adminToken || token !== adminToken) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white px-4">
         <div className="max-w-md w-full p-8 border border-zinc-800 rounded-lg text-center bg-zinc-900/50 backdrop-blur-md shadow-2xl">
@@ -83,7 +83,6 @@ export default async function AdminAnalyticsPage({ searchParams }: PageProps) {
               Verify
             </button>
           </form>
-          <p className="text-xs text-zinc-600 mt-4">Hint: The default dev token is <code>Koushik1995!</code></p>
         </div>
       </div>
     );

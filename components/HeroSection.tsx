@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FileDown, Sparkles, Mail, MapPin, Award, Phone, Globe, Terminal } from 'lucide-react';
+import { FileDown, Sparkles, Mail, MapPin, Award, Globe, Terminal } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/Icons';
 import { RESUME_DATA } from '@/data/resume';
 import Image from 'next/image';
@@ -28,11 +28,6 @@ export function HeroSection({ onOpenChat }: HeroSectionProps) {
               <span className="flex items-center gap-1">
                 <MapPin className="w-3.5 h-3.5 text-emerald-500" />
                 {RESUME_DATA.personalInfo.location}
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1">
-                <Phone className="w-3.5 h-3.5 text-emerald-500" />
-                {RESUME_DATA.personalInfo.phone}
               </span>
               <span>•</span>
               <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-sans font-semibold">
